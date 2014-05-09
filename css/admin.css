@@ -1,0 +1,123 @@
+td, th { font-size: 13px; }
+.back-wine { background-color: #a1223d !important; }
+
+.nested-sortable-2 li, .nested-sortable-1 li { cursor: default; list-style-type: none; }
+.nested-sortable-2, .nested-sortable-1 { cursor: default; list-style-type: none;  padding-left: 0px; }
+
+
+.form-actions { text-align: right; }
+
+.no-sort { color: grey; }
+
+.width-200 { width: 200px !important; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+
+.black-link { color: #333; }
+.vdr-widget .black-link:hover { color: white; }
+
+.special-logo { position: absolute; top: 20px; right: 0px; width: 220px; }
+.special-logo h5 { color: #333; font-weight: bold; font-size: 20px; display: block; text-align: right; margin-right: 44px; margin-top: 0px; cursor: pointer;}
+.special-logo h5 .subtitle{ color: #333; font-weight: normal; font-size: 10px; display: block; }
+
+.sidebar-handle { position: absolute; z-index: 1000000; }
+.help-block { color: #333 !important; }
+
+#notify-messages{
+	display: none;
+}
+
+.stat-value {
+	font-style: italic;
+}
+
+.panel-info .panel-heading, .panel-warning .panel-heading{
+	color: white;
+}
+
+.margin-top-xs{
+	margin-top: 10px !important;
+}
+
+.files-container {
+	margin-bottom: 30px;
+}
+.files-container .dz-preview .dz-details{ 
+	width: 870px;
+	height: 30px;
+ }
+.files-container .dz-preview .dz-details .dz-filename{ 
+	padding-top: 5px;
+	float: left;
+}
+.files-container .dz-preview .dz-details img{ 
+	display: none;
+}
+.files-container .dz-preview .dz-details .overlay{ 
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+.files-container .dz-preview .dz-details .overlay .controls{ 
+	float: right;
+	position: static;
+}
+
+.selected {
+	background-color: #3392e3;
+	color: white !important;
+}
+
+.list-selectable {
+	position: relative;
+	top: -6px;
+	display: inline-block;
+	height: 24px;
+	padding: 4px 6px 3px;
+	font-size: 14px;
+	line-height: 18px;
+	vertical-align: middle;
+	border-radius: 3px;
+	color: inherit;
+	-webkit-transition: all .1s;
+	transition: all .1s;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.section-title i {
+	color: #3699d2;
+}
+
+
+
+
+.tdcenter {
+	vertical-align: middle !important;
+}
+
+.ui-pnotify-history-container {
+	display: none !important;
+}
+
+#tag_info {
+	display: none !important;
+}
+
+.both-logos {
+	margin: 10px 0px;
+}
+
+.vdr-title{
+	font-weight: bold;
+	font-size: 26px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.bold {
+	font-weight: bold !important;
+}
+.not-bold {
+	font-weight: normal !important;
+}

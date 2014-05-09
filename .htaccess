@@ -1,0 +1,8 @@
+Options +FollowSymlinks
+RewriteEngine on
+Options All -Indexes
+
+#RewriteRule ^ajax/$ index.php?mod=ajax [QSA,L]
+#RewriteRule ^upload/$ index.php?mod=upload [QSA,L]
+#RewriteRule ^~vdr/ajax/$ index.php?mod=ajax [QSA,L]
+#RewriteRule ^~vdr/upload/$ index.php?mod=upload [QSA,L]

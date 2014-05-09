@@ -1,0 +1,4 @@
+[08-Apr-2014 20:16:55 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/vdr/public_html/pipe/email.php on line 98
+[08-Apr-2014 20:16:55 UTC] PHP Warning:  implode() [<a href='function.implode'>function.implode</a>]: Invalid arguments passed in /home/vdr/public_html/pipe/email.php on line 109
+[09-Apr-2014 14:46:50 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/vdr/public_html/pipe/email.php on line 98
+[09-Apr-2014 14:46:50 UTC] PHP Warning:  implode() [<a href='function.implode'>function.implode</a>]: Invalid arguments passed in /home/vdr/public_html/pipe/email.php on line 109
