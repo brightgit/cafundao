@@ -19,7 +19,7 @@ class Process extends Core_admin
 		//se sim, carregar a informação de cliente, caso contrário, no próximo passo, na inserção em db, é necessário criar um novo cliente com os dados enviados em $_POST
 		if($this->client_id)
 			$this->client_data = $this->load_client_data();
-	
+
 	}
 
 	function load_client_data(){
@@ -30,6 +30,11 @@ class Process extends Core_admin
 			return $result = mysql_fetch_object($query);
 
 		return false;
+	}
+
+	function save(){
+		var_dump($_POST);
+		die();
 	}
 
 	//view related methods
@@ -43,10 +48,6 @@ class Process extends Core_admin
 		if ( 1 ) {
 			# code...
 		}
-
-
-
-
 
 	}
 

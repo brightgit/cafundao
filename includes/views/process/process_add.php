@@ -22,7 +22,7 @@
 				</h1>
 			</div>
 			<div class="pull-right panel-title-block-actions">
-				<a href="index.php?mod=clientes_list&id=<?php echo $_GET["id"]; ?>">
+				<a href="index.php?mod=clientes_list&amp;id=<?php echo $_GET["id"]; ?>">
 					<i class="icon-arrow-left"></i>
 					<span>Voltar</span>
 				</a>
@@ -38,43 +38,33 @@
 				<div class="list-group">
 					<div class="list-group-item" id="twelve-grid-system">
 						<h4 class="section-title">Ficha Informativa - Conta Corrente Caucionada</h4>
-						<form class="form-horizontal" role="form">
+						<form class="form-horizontal" role="form" action="<?php echo base_url("?mod=process&act=save") ?>" method="post">
 							<h4 class="section-title">1 - Identificação da Mutuária - Pessoa Colectiva / Empresa</h4>
 							<div class="form-group">
 								<?php if ( $_GET["id"] ): ?>
 									<input type="hidden" name="client_id" value="<?php echo $_GET["id"] ?>" />
 								<?php endif ?>
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									Nome
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">Nome</label>
 								<div class="col-lg-4">
-									<input class="form-control" <?php echo ( $_GET["id"] )?'readonly="readonly"':''; ?> value="<?php echo $this->mod_data->client_data->nome ?>">
+									<input name="process_client_nome" class="form-control" <?php echo ( $_GET["id"] )?'readonly="readonly"':''; ?> value="<?php echo $this->mod_data->client_data->nome ?>">
 								</div>
-								<label for="input-grid-2-2" class="col-lg-2 control-label">
-									Nº Cliente
-								</label>
+								<label for="input-grid-2-2" class="col-lg-2 control-label">Nº Cliente</label>
 								<div class="col-lg-4">
-									<input id="input-grid-2-2" <?php echo ( $_GET["id"] )?'readonly="readonly"':''; ?> class="form-control" value="<?php echo $this->mod_data->client_data->numero_cliente ?>">
+									<input name="process_client_numero_cliente" id="input-grid-2-2" <?php echo ( $_GET["id"] )?'readonly="readonly"':''; ?> class="form-control" value="<?php echo $this->mod_data->client_data->numero_cliente ?>">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									Balcão
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">Balcão</label>
 								<div class="col-lg-2">
-									<input class="form-control" <?php echo ( $_GET["id"] )?'readonly="readonly"':''; ?> value="<?php echo $this->mod_data->client_data->balcao ?>">
+									<input name="process_client_balcao" class="form-control" <?php echo ( $_GET["id"] )?'readonly="readonly"':''; ?> value="<?php echo $this->mod_data->client_data->balcao ?>">
 								</div>
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									Telemóvel
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">Telemóvel</label>
 								<div class="col-lg-2">
-									<input class="form-control" <?php echo ( $_GET["id"] )?'readonly="readonly"':''; ?> value="<?php echo $this->mod_data->client_data->telemovel ?>">
+									<input name="process_client_telemovel" class="form-control" <?php echo ( $_GET["id"] )?'readonly="readonly"':''; ?> value="<?php echo $this->mod_data->client_data->telemovel ?>">
 								</div>
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									NIPC / Matric. Nº
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">NIPC / Matric. Nº</label>
 								<div class="col-lg-2">
-									<input class="form-control" <?php echo ( $_GET["id"] )?'readonly="readonly"':''; ?> value="<?php echo $this->mod_data->client_data->nipc ?>">
+									<input name="process_client_nipc" class="form-control" <?php echo ( $_GET["id"] )?'readonly="readonly"':''; ?> value="<?php echo $this->mod_data->client_data->nipc ?>">
 								</div>
 							</div>
 
@@ -455,7 +445,7 @@
 							</div>
 
 							<div class="form-group">
-								<div class="pull-right"><input type="button" class="btn btn-success" value="Inserir" /></div>
+								<div class="pull-right"><input type="submit" class="btn btn-success" value="Inserir" /></div>
 							</div>
 
 						</form>

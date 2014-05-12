@@ -1,5 +1,15 @@
 $(document).ready(function(){
 
+	$("input[name=processo_montante]").on("keyup", function(){
+		var valor = $("input[name=processo_montante]").val();
+		$("input[name=processo_montante_extenso]").val(valor.extenso(true));
+
+		if(valor > 25000)
+			$("div.montante-analise-risco").fadeIn();
+		else
+			$("div.montante-analise-risco").fadeOut();
+	})
+
 	//load dos widgets
 	$(".vdr-widget").css({
 		opacity: '1'
@@ -10,11 +20,8 @@ $(document).ready(function(){
 		$(this).addClass("selected");
 	} );
 
-
-
 	//remove o history (consequentemente removendo o "Redisplay" do topo direito)
 	$.pnotify.defaults.history = false;
-
 
 	//notificacoes
 	$("#notify-messages li").each(function(){

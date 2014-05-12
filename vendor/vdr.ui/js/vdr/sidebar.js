@@ -146,9 +146,6 @@ vdr.sidebar = {
 		}).on("select_node.jstree", function(e,data){
 
 			var current_folder_name = data.rslt.obj.children("a").text();
-			console.log( data.rslt.obj );
-			//alert( "Cliente:" + data.rslt.obj.data("clientid") );
-			//alert( "Processo:" + data.rslt.obj.data("processid") );
 			var folder_id = data.rslt.obj.data("id");
 			//alert(current_folder_name);
 
@@ -169,10 +166,12 @@ vdr.sidebar = {
 				url: BASEPATH + 'index.php',
 				type: 'GET',
 				data: {
-					mod: "clientes_list",
-					act: "list_process",
-					clientid: data.rslt.obj.data("clientid"),
-					processid: data.rslt.obj.data("processid"),
+					mod: "ajax",
+					act: data.rslt.obj.data("act"),
+					item_type: data.rslt.obj.data("item-type"),
+					folder_type: data.rslt.obj.data("folder-type"),
+					id: data.rslt.obj.data("id"),
+					output: output_format
 				}
 			})
 			.done(function(response_string) {
@@ -198,14 +197,6 @@ vdr.sidebar = {
 
 				$(".put_name_here").html( current_folder_name );
 				$("#parent_folder").val( current_folder_id );
-				if ( current_folder_id == 1 ) {	//Se o pai é "clientes" então estamos a criar um cliente
-					$(".client_id_block").show(0);
-					$("#client_id").attr("required", "required");
-				}else{
-					$(".client_id_block").hide(0);
-					$("#client_id").removeAttr( "required" );
-				}
-				$("#client_id").val("");
 				$("#folder_to_delete_id").val( current_folder_id );
 				$("#remove_folder_link").removeClass( "hide" );
 				$("a.fancythis").fancybox({

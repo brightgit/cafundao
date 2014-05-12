@@ -108,8 +108,6 @@ class Core_admin {
 			die("Module <b>".$this->mod."</b> not defined in modules listing");
 		}
 
-
-
 		//carregar o ficheiro 
 		$file = base_path("includes/modules/".$modules[ $this->mod ]["file"].".mod.php");
 
@@ -181,7 +179,7 @@ class Core_admin {
 		function base_path($url = false){
 
 			if($_SERVER["HTTP_HOST"] == "localhost"){
-				$path_osx = "/Users/bright/Documents/htdocs/virtualdataroom/cafundao";
+				$path_osx = "/Users/bright/Documents/htdocs/cafundao";
 				$path_win = "C:/xampp/htdocs/cafundao";
 				$path = is_dir($path_osx) ? $path_osx : $path_win;
 			}

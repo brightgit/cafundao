@@ -51,7 +51,7 @@
 .alert-success .alert-link{color:#54671c;color:#808080}
 .alert-success .title{display:block;font-size:14px;color:#666;margin-bottom:5px}
 .alert-success .title i{color:#aece4e;margin-right:7px}
-.alert-info{background-color:#a5c8e5;background-color:#fff;border-color:#a5c8e5;color:#5698ce;color:#999;font-size:12px}
+.alert-info{background-color:#a5c8e5;background-color:#fff;border-color:#a5c8e5;color:#5698ce;color:#999;font-size:12px; font-weight: bold;}
 .alert-info hr{border-top-color:#91bcdf}
 .alert-info .alert-link{color:#367fbb;color:#808080}
 .alert-info .title{display:block;font-size:14px;color:#666;margin-bottom:5px}
@@ -1562,4 +1562,23 @@ i.fileinput-exists{display:inline-block;padding-right:10px}
 
 li.no-children a ins.jstree-icon{
 	/*display: none !important;*/
+}
+
+table.table caption{
+	font-size: 14px;
+	font-weight: bold;
+	padding: 10px;
+	text-align: center;
+}
+
+.taxa-variavel{
+	text-align: center;
+	font-size: 17px;
+	padding: 15px;
+	border: 1px solid #dfdfdf;
+	text-transform: uppercase;
+}
+
+.montante-analise-risco{
+	display: none;
 }

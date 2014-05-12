@@ -8,6 +8,7 @@
 	<script src="<?php echo base_url("vendor/vdr.ui/js/vdr.js") ?>"></script>
 	<script src="<?php echo base_url("vendor/vdr.ui/js/vdr/forms.js") ?>"></script>
 	<script src="<?php echo base_url("vendor/vdr.ui/js/vdr/tables.js") ?>"></script>
+	<script src="<?php echo base_url("js/extenso.js") ?>"></script>
 	<script src="<?php echo base_url("vendor/vdr.ui/js/vdr/sidebar.js") ?>"></script>
 	<script src="<?php echo base_url("vendor/vdr.ui/js/vdr/calendar.js") ?>"></script>
 	<script src="<?php echo base_url("vendor/vdr.ui/js/vendor/jquery.jstree.js") ?>"></script>
