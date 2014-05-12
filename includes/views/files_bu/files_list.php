@@ -2,8 +2,7 @@
 
 //criação das pastas principais na sidebar
 $files = new files;
-//$folders = $files->clientes(); //retorna estilo $folder["name"]["file1"]
-$clients = $files->get_clients();
+$folders = $files->get_folders(); //retorna estilo $folder["name"]["file1"]
 
 ?>
 

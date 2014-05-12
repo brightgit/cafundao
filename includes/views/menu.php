@@ -3,7 +3,7 @@
 	<ul>
 		<li><a href="<?php echo base_url("index.php?mod=home") ?>"><i class="icon-home nav-icon"></i><span class="nav-text">Dashboard</span></a></li>
 		<li><a href="<?php echo base_url("index.php?mod=inbox_list") ?>"><i class="icon-inbox nav-icon"></i><span class="nav-text">Inbox</span></a></li>
-		<li><a href="<?php echo base_url("index.php?mod=files") ?>"><i class="icon-file-alt nav-icon"></i><span class="nav-text">Processos</span></a></li>
+		<li><a href="<?php echo base_url("index.php?mod=clientes_list") ?>"><i class="icon-file-alt nav-icon"></i><span class="nav-text">Processos</span></a></li>
 		<li><a href="<?php echo base_url("index.php?mod=pesquisa_avancada") ?>"><i class="icon-gears nav-icon"></i><span class="nav-text">Pesquisa Avançada</span></a></li>
 		<li><a href="<?php echo base_url("index.php?mod=tags_list") ?>"><i class="icon-tags nav-icon"></i><span class="nav-text">Tags</span></a></li>		
 		<li><a href="<?php echo base_url("index.php?mod=users_list") ?>"><i class="icon-group nav-icon"></i><span class="nav-text">Utilizadores</span></a></li>

@@ -87,6 +87,19 @@ class Tools
 		return $timeCalc;
 	}
 
+	function time_for ($newTime, $today = "") {
+		
+		if(empty($newTime))
+			$newTime = date("Y-m-d H:m:s");
+
+		$timeCalc = strtotime($newTime) - strtotime($today);
+		if ($timeCalc > (60*60*24)) {$timeCalc = round($timeCalc/60/60/24) . " dia(s)";}
+		else if ($timeCalc > (60*60)) {$timeCalc = round($timeCalc/60/60) . " hora(s)";}
+		else if ($timeCalc > 60) {$timeCalc = round($timeCalc/60) . " minuto(s)";}
+		else if ($timeCalc > 0) {$timeCalc .= " seconds";}
+		return $timeCalc;
+	}
+
 	function url_title( $str ){
 		
 	        $str = strtolower($str);
@@ -96,6 +109,10 @@ class Tools
 			$str = preg_replace("/&([a-z])[a-z]+;/i", "$1", htmlentities($str));
 			
 			return str_replace(" ", "-", $str);
+	}
+
+	function display_date( $timestamp ) {
+		return $timestamp;
 	}
 
 }

@@ -224,7 +224,7 @@ class Files extends Core_admin
 	}
 
 	//fetch main folders
-	function get_folders($parent = 0){
+	function get_folders( $parent = 0 ){
 
 		//2 listagens possiveis:
 

@@ -1,4 +1,5 @@
 <?php 
+
 	$modules[ "login" ] = array( 'file' => "login/login", "login" => FALSE );
 	$modules[ "ajax" ] = array( 'file' => "ajax/ajax", "login" => FALSE );
 	$modules[ "upload" ] = array( 'file' => "upload/upload", "login" => TRUE );
@@ -21,6 +22,7 @@
 
 	$modules[ "workflow_view" ] = array( 'file' => "workflow/workflow_view", "login" => TRUE );
 	
+	
 	$modules[ "access_control_list" ] = array( 'file' => "access_control/access_control_list", "login" => TRUE );
 	
 	//$modules[ "catalogo_list" ] = array( 'file' => "catalogo/catalogo_list", "login" => TRUE );
@@ -30,4 +32,10 @@
 	$modules[ "seo" ] = array( 'file' => "seo/seo", "login" => TRUE );
 	$modules[ "clientes_list" ] = array( 'file' => "clientes/clientes_list", "login" => TRUE );
 	$modules[ "subscritores_list" ] = array( 'file' => "subscritores/subscritores_list", "login" => TRUE );
+
+
+	$modules["process_add"] = array ("file" => "process/process_add", "login" => true);
+	$modules["process"] = array ("file" => "process/process", "login" => true);
+	
+
 ?>

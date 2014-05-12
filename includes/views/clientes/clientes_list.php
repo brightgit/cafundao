@@ -1,9 +1,9 @@
 <?php
 
 //criação das pastas principais na sidebar
-$files = new files;
-//$folders = $files->clientes(); //retorna estilo $folder["name"]["file1"]
-$clients = $files->get_clients();
+$c = new Clientes();
+
+$clientes = $c->get_processos_and_clients();
 
 ?>
 
@@ -35,12 +35,9 @@ $clients = $files->get_clients();
 				<div class="title">
 					<i class="icon-folder-open"></i>
 					<span>
-						Pastas
+						Processos
 					</span>
-					<a href="#" class="hide add" data-toggle="modal" data-target="#remover_pasta" id="remove_folder_link" title="Remover Pasta">
-						<i class="icon-remove-sign"></i>
-					</a>
-					<a href="#" data-toggle="modal" data-target="#adicionar_pasta" class="add" title="Adicionar Pasta">
+					<a href="index.php?mod=process&act=add"  class="add" title="Adicionar Cliente">
 						<i class="icon-plus-sign"></i>
 					</a>
 
@@ -48,17 +45,23 @@ $clients = $files->get_clients();
 
 
 				<div class="tab-content panel-default panel-block">
-					<div id="categorias" class="jstree tab-pane list-group active tree-body">
-						<div class="list-group-item scrollable jstree-vdr" id="vdr-tree">
+					<div class="jstree tab-pane list-group active tree-body">
+						<div class="list-group-item scrollable jstree-vdr">
 							<ul>
-								<?php foreach ($folders as $folder): ?>
-								<li data-item-type="folder" data-act="folder_open" data-folder-type="<?php echo ($folder["values"]->type == "0") ? "files" : "images" ?>" data-id="<?php echo $folder["values"]->id ?>">
-									<a href="#" title="<?php echo $folder["values"]->name ?>">
-										<?php echo $folder["values"]->name ?>
-									</a>
-									<?php if(!empty($folder["children"])) $files->list_children($folder["children"]); ?>
-								</li>
-						<?php endforeach ?>
+
+								<?php foreach ($clientes as $cliente): ?>
+									<?php if ( count($cliente["processes"]) > 1 ) : ?>
+										<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="0"><a href="#"><?php echo $cliente["nome"]; ?></a>
+											<ul>
+											<?php foreach ($cliente["processes"] as $key => $value): ?>
+												<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $value["id"]; ?>"><a href="#"><?php echo $value["name"] ?></a></li>
+											<?php endforeach ?>
+											</ul>
+										</li>
+									<?php else: ?>
+										<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $cliente["processes"][0]["id"]; ?>"><a href="#"><?php echo $cliente["processes"][0]["name"]; ?> - <?php echo $cliente["nome"]; ?></a></li>
+									<?php endif ?>
+								<?php endforeach ?>
 					</ul>
 				</div>
 			</div>

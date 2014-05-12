@@ -171,7 +171,7 @@ class Core_admin {
 
 		function base_url($url = false){
 			if($_SERVER["HTTP_HOST"] == "localhost")
-				$host = "http://localhost/virtualdataroom";
+				$host = "http://localhost/cafundao";
 			else
 				$host = "http://www.virtualdataroom.pt/cafundao";
 			return $host."/".$url;
@@ -182,7 +182,7 @@ class Core_admin {
 
 			if($_SERVER["HTTP_HOST"] == "localhost"){
 				$path_osx = "/Users/bright/Documents/htdocs/virtualdataroom/cafundao";
-				$path_win = "C:/xampp/htdocs/virtualdataroom";
+				$path_win = "C:/xampp/htdocs/cafundao";
 				$path = is_dir($path_osx) ? $path_osx : $path_win;
 			}
 			else
@@ -193,7 +193,7 @@ class Core_admin {
 
 			if($_SERVER["HTTP_HOST"] == "localhost"){
 				$path_osx = "/Users/bright/Documents/htdocs/virtualdataroom/cafundao";
-				$path_win = "C:/xampp/htdocs/virtualdataroom";
+				$path_win = "C:/xampp/htdocs/cafundao";
 				$path = is_dir($path_osx) ? $path_osx : $path_win;
 			}
 			else
@@ -364,7 +364,7 @@ class Database
 	function connect(){
 
 		//$connection = new mysqli($this->host, $this->user, $this->password);		
-		$connection = mysql_pconnect($this->host, $this->user, $this->password);
+		$connection = mysql_pconnect($this->host, $this->user, $this->password) or die( mysql_error() );
 		$database = mysql_select_db($this->database);
 		mysql_query("SET NAMES UTF8"); //fix encoding
 		

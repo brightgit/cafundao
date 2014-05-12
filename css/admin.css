@@ -121,3 +121,6 @@ td, th { font-size: 13px; }
 .not-bold {
 	font-weight: normal !important;
 }
+.padding-10 {
+	padding: 10px !important;
+}

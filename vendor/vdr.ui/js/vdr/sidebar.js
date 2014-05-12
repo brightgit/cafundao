@@ -146,6 +146,9 @@ vdr.sidebar = {
 		}).on("select_node.jstree", function(e,data){
 
 			var current_folder_name = data.rslt.obj.children("a").text();
+			console.log( data.rslt.obj );
+			//alert( "Cliente:" + data.rslt.obj.data("clientid") );
+			//alert( "Processo:" + data.rslt.obj.data("processid") );
 			var folder_id = data.rslt.obj.data("id");
 			//alert(current_folder_name);
 
@@ -166,12 +169,10 @@ vdr.sidebar = {
 				url: BASEPATH + 'index.php',
 				type: 'GET',
 				data: {
-					mod: "ajax",
-					act: data.rslt.obj.data("act"),
-					item_type: data.rslt.obj.data("item-type"),
-					folder_type: data.rslt.obj.data("folder-type"),
-					id: data.rslt.obj.data("id"),
-					output: output_format
+					mod: "clientes_list",
+					act: "list_process",
+					clientid: data.rslt.obj.data("clientid"),
+					processid: data.rslt.obj.data("processid"),
 				}
 			})
 			.done(function(response_string) {
