@@ -5,6 +5,11 @@ $c = new Clientes();
 
 $clientes = $c->get_processos_and_clients();
 
+require_once( base_path( "includes/modules/users/users.mod.php" ) );
+$u = new Users();
+
+$this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
+
 ?>
 
 <section class="sidebar extended" style="max-height: none; opacity: 1;">
@@ -37,9 +42,12 @@ $clientes = $c->get_processos_and_clients();
 					<span>
 						Processos
 					</span>
-					<a href="index.php?mod=process&act=add"  class="add" title="Adicionar Cliente">
-						<i class="icon-plus-sign"></i>
-					</a>
+
+					<?php if ( $this_user["p_upload"] ): ?>
+						<a href="index.php?mod=process&act=add"  class="add" title="Adicionar Cliente">
+							<i class="icon-plus-sign"></i>
+						</a>
+					<?php endif ?>
 
 				</div>
 
@@ -110,7 +118,7 @@ $clientes = $c->get_processos_and_clients();
 		<div class="col-sm-12">
 			<div class="panel panel-default panel-block">
 				<div class="list-group" id="ajax-content">
-					<p>Seleccione uma pasta para apresentar ficheiros</p>
+					<p>Seleccione um cliente ou processo para visualizar o estado.</p>
 					<!-- content will be loaded here -->
 				</div>
 			</div>

@@ -96,11 +96,43 @@ vdr.tables = {
 	        	var i = 0;
 				var send = new Array();
 
-	        	var nome_ficheiro = $("#nome_ficheiro").val();
-	        	if ( nome_ficheiro ) {
+	        	var processo = $("#processo").val();
+	        	if ( processo ) {
 					send[i] = {};
-					send[i].name = 'nome_ficheiro';
-					send[i].value = nome_ficheiro;
+					send[i].name = 'processo';
+					send[i].value = processo;
+					i++;
+	        	};
+
+	        	var id_cliente = $("#id_cliente").val();
+	        	if ( id_cliente ) {
+					send[i] = {};
+					send[i].name = 'id_cliente';
+					send[i].value = id_cliente;
+					i++;
+	        	};
+
+	        	var cliente = $("#cliente").val();
+	        	if ( cliente ) {
+					send[i] = {};
+					send[i].name = 'cliente';
+					send[i].value = cliente;
+					i++;
+	        	};
+
+	        	var balcao = $("#balcao").val();
+	        	if ( balcao ) {
+					send[i] = {};
+					send[i].name = 'balcao';
+					send[i].value = balcao;
+					i++;
+	        	};
+
+	        	var estado = $('input[name="estado"]').val();
+	        	if ( estado ) {
+					send[i] = {};
+					send[i].name = 'estado';
+					send[i].value = estado;
 					i++;
 	        	};
 

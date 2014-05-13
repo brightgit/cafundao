@@ -44,16 +44,16 @@ $p = new Pesquisa();
 		 			<h4 class="section-title">Pesquisa Avançada </h4>
 		 			
 
-		            <table class="table table-bordered table-striped" id="pesquisa_avancada">
+		            <table class="table table-bordered table-striped table-condensed" id="pesquisa_avancada">
 		                <thead>
 		                    <tr>
 		                        <!--th style="width:10px;"></th Isto é suposto ser multiple actions-->
-		                        <th style="width:20px;">#</th>
-		                        <th>Nome</th>
-		                        <th>Pasta</th>
-		                        <th>Data</th>
-		                        <th>Acções</th>
-		                        <!-- th>Peso</th -->
+		                        <th style="width:20px;">Processo</th>
+		                        <th>ID Cliente</th>
+		                        <th>Cliente</th>
+		                        <th>Balcão</th>
+		                        <th>Estado</th>
+		                        <th>Prazo</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
@@ -73,15 +73,34 @@ $p = new Pesquisa();
 							<form onsubmit="vdr.tables.pesquisa_avancada_table.fnDraw(); $('#pesquisa_avanacada_button').addClass('disabled'); return false;" class="form-vertical">
 								<h4>Filtro de Pesquisa</h4>
 								<div class="control-group">
-									<label >Nome do Ficheiro</label>
-									<input type="text" value="<?php echo $_GET["nome_ficheiro"]; ?>" onkeyup="$('#pesquisa_avanacada_button').removeClass('disabled');" class="form-control" name="nome_ficheiro" id="nome_ficheiro" />
+									<label >Processo</label>
+									<input type="text" value="<?php echo $_GET["processo"]; ?>" onkeyup="$('#pesquisa_avanacada_button').removeClass('disabled');" class="form-control" name="processo" id="processo" />
 								</div>
 								<div class="control-group">
-									<label>Data Mínima</label>
+									<label >ID Cliente</label>
+									<input type="text" value="<?php echo $_GET["id_cliente"]; ?>" onkeyup="$('#pesquisa_avanacada_button').removeClass('disabled');" class="form-control" name="id_cliente" id="id_cliente" />
+								</div>
+								<div class="control-group">
+									<label >Cliente</label>
+									<input type="text" value="<?php echo $_GET["cliente"]; ?>" onkeyup="$('#pesquisa_avanacada_button').removeClass('disabled');" class="form-control" name="cliente" id="cliente" />
+								</div>
+								<div class="control-group">
+									<label >Balcão</label>
+									<input type="text" value="<?php echo $_GET["balcao"]; ?>" onkeyup="$('#pesquisa_avanacada_button').removeClass('disabled');" class="form-control" name="balcao" id="balcao" />
+								</div>
+								<div class="control-group">
+									<div class="control-label"><label>Estado</label></div>
+									<label class="checkbox"> <input type="radio" name="estado" value="em_processamento" /> Não submetido para avaliação</label>
+									<label class="checkbox"> <input type="radio" name="estado" value="avaliacao" /> Em Avaliação</label>
+									<label class="checkbox"> <input type="radio" name="estado" value="aceite" /> Aprovado</label>
+									<label class="checkbox"> <input type="radio" name="estado" value="reprovado" /> Reprovado</label>
+								</div>
+								<div class="control-group">
+									<label>Prazo ( > que:)</label>
 									<input type="text" onkeyup="$('#pesquisa_avanacada_button').removeClass('disabled');" class="datetimepicker-dat-range form-control" name="date_start" id="date_start" />
 								</div>
 								<div class="control-group">
-									<label>Data Máxima</label>
+									<label>Data ( < que: )</label>
 									<input type="text" onkeyup="$('#pesquisa_avanacada_button').removeClass('disabled');" class="datetimepicker-dat-range form-control" name="date_end" id="date_end" />
 								</div>
 								<hr />

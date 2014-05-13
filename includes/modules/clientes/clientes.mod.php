@@ -5,9 +5,13 @@ class Clientes
 
 	function __construct()
 	{
+
 	}
 	
 	public function get_processos_and_clients() {
+
+		//$this_u = $u->get_user_by_id( $_SESSION["user_bo"] );
+
 		$clientes = $this->get_all_clientes();
 
 
@@ -29,7 +33,19 @@ class Clientes
 	}
 
 	public function get_all_clientes(){
-		$query = "select clients.* from processes left join clients on clients.id = processes.client_id group by clients.id order by `data` asc ";
+		require_once( base_path( "includes/modules/users/users.mod.php" ) );
+
+		$u = new Users();
+		$this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de comentários
+
+		if ( $this_user["p_analise_risco"] ) {
+			$where = " where processes.analise_risco = 1 ";
+		}else{
+			$where = "";
+		}
+
+		$query = "select clients.* from processes left join clients on clients.id = processes.client_id ".$where." group by clients.id order by `data` asc ";
+		//echo $query;
 		$res = mysql_query($query) or die_sql( $query );
 		while ( $row = mysql_fetch_array($res) ) {
 			$ret[] = $row;
