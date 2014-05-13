@@ -8,6 +8,7 @@ class Core_admin {
 	public $mod_data; //info da página actual
 	public $lang;
 	public $settings;
+	public $user;
 
 	//on load core
 	function __construct() {
@@ -27,6 +28,8 @@ class Core_admin {
 		//file based settings TODO
 		$this->load_settings();
 
+
+		require_once( base_path( "includes/modules/users/users.mod.php" ) );
 
 		include("includes/tools.php");
 
@@ -155,14 +158,14 @@ class Core_admin {
 		}
 
 		function die_sql( $sql = "" ){
-			// echo '<div style="margin-left:200px;">';
-			// echo '<hr />';
-			// echo mysql_error();
-			// echo '<br />';
-			// echo $sql;
-			// echo '<hr />';
-			// echo "</div>";
-			// die();
+			echo '<div style="margin-left:200px;">';
+			echo '<hr />';
+			echo mysql_error();
+			echo '<br />';
+			echo $sql;
+			echo '<hr />';
+			echo "</div>";
+			die();
 
 		}
 

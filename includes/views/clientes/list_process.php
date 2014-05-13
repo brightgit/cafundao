@@ -6,16 +6,23 @@ $cliente = $c->get_cliente( $_GET["clientid"] );
 if ( $_GET["processid"] != 0 ) {	//Temos processo
 	$processo = $c->get_processo( $_GET["processid"] );
 }
+
+
 require_once( base_path( "includes/modules/users/users.mod.php" ) );
 
 $u = new Users();
+
 $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de comentários
 
 
  ?>
 
 <div class="form-horizontal">
- <h4>Cliente</h4> <a href="index.php?mod=process&act=add&id=<?php echo $cliente["id"]; ?>">Adicionar novo processo a este cliente</a>
+ <h4>Cliente</h4> 
+<?php if ($this_user["p_upload"]): ?>
+ <a href="index.php?mod=process&act=add&id=<?php echo $cliente["id"]; ?>">Adicionar novo processo a este cliente</a>
+<?php endif ?>
+
  <div class="col-lg-12">
  	<div class="col-lg-6">
  		<div><strong>Nome:</strong> <?php echo $cliente["nome"]; ?></div>
@@ -30,6 +37,9 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  </div>
  <div class="clearfix"></div>
  
+
+ <?php if (isset($processo)): ?>
+ 	
  <h4>Processo</h4>
  <div class="col-lg-12">
 
@@ -40,9 +50,9 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  	</div>
 
  	<div class="col-lg-6"> 
- 		<div><a href="index.php?mod=process&act=view&client_id=<?php echo $processo["id"]; ?>"><i class="icon-file-text"></i> Ver processo</a></div>
+ 		<div><a href="index.php?mod=process&act=view&process_id=<?php echo $processo["id"]; ?>"><i class="icon-file-text"></i> Ver processo</a></div>
  		<?php if ($processo["avaliacao"] == 0): ?>
- 			<div><a href="index.php?mod=process&act=add&client_id=<?php echo $processo["id"]; ?>"><i class="icon-edit"></i> Editar processo</a></div>
+ 			<div><a href="index.php?mod=process&act=add&process_id=<?php echo $processo["id"]; ?>"><i class="icon-edit"></i> Editar processo</a></div>
  		<?php endif ?>
 	</div>
  </div>
@@ -112,19 +122,40 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
 
 
  <div class="clearfix"></div>
- <h4>Estado</h4>
  <?php 
-switch ($processo["avaliacao"]) {
-	case 0:	//Ainda não está em avaliação
+//Vou colocar aqui a valição do switch para melhor visibilidade
+ if ( $processo["avaliacao"] == 0 ) {	//Processso ainda sem avaliação
+ 	$var = 0.1;	//Se for 0 há conflito
+ }elseif( $processo["avaliacao"] == 1 ) {	//Processo em avaliação
+ 	if ( $processo["analise_risco"] == 1 && $this_user["p_analise_risco"] == 1 ) {	//U utilizador não pode votar
+ 		$var = 1.2;
+ 	}elseif( !isset($processo["analise_risco"]) ){	//O utilizador pode votar e não é necessário análise de risco
+ 		$var = 1.1;
+ 	}elseif( !$this_user["p_vote"] && !$this_user["p_quality_vote"] ){	//Está em análise de risco e o utilizador pode analisar
+ 		$var = false;
+ 	}else{
+ 		$var = false;
+ 	}
+
+ }elseif( $processo["avaliacao"] == 2 && !$this_user["p_vote"] && !$this_user["p_quality_vote"] ){	//Já terminou a votação e o utilizador pode votar
+ 	$var = 2;
+ }
+
+
+
+switch ($var) {
+	case 0.1:	//Ainda não está em avaliação
 		?>
+ 		<h4>Estado</h4>
 		<p>Este processo ainda não submetido para avaliação. <a href="index.php?mod=clientes_list&act=avaliar&id=<?php echo $processo["id"] ?>" class="btn btn-primary pull-right">Submeter para avaliação</a> </p>
 		<?php
 		break;
-	case 1:	//Em avaliação
+	case 1.1:	//Em avaliação
 		require( base_path( "includes/modules/workflow/workflow.mod.php" ) );
 		$w = new Workflow();
 
 		?>
+ 		<h4>Estado</h4>
 		<p>Este processo encontra-se em avaliação.</p>
 		<hr style="margin-bottom:0;" />
 		<div class="">
@@ -183,8 +214,29 @@ switch ($processo["avaliacao"]) {
 
 		<?php
 		break;
+	case 1.2:	//Avaliação de risco
+		?>
+ 		<h4>Análise de risco</h4>
+ 		<div class="col-lg-12">
+ 			<form class="form-horizontal" action="index.php?mod=clientes_list&act=analise_de_risco" method="post">
+ 				<input type="hidden" name="process_id" value="<?php echo $processo["id"] ?>" />
+ 				<div class="control-group">
+ 					<label>Análise de risco</label>
+ 					<div class="">
+ 						<textarea class="form-control auto-resize" name="analise_risco_texto"></textarea>
+ 					</div>
+ 				</div>
+ 				<hr />
+ 				<div class="form-actions">
+					<input type="submit" class="btn btn-primary" name="submit_analise_risco" value="Submeter análise de risco">
+				</div>
+ 			</form>
+ 		</div>
+		<?php
+		break;
 	case 2:	//Avaliado
 		?>
+ 		<h4>Estado</h4>
 		<?php if ( $processo["resultado"] ==  1): ?>
 			<p class="alert alert-success padding-10">Processo Aprovado</p>
 		<?php else: ?>
@@ -195,7 +247,8 @@ switch ($processo["avaliacao"]) {
 }
   ?>
 
- <div class="clearfix"></div>
+ 	<div class="clearfix"></div>
+  <?php endif ?>
 </div>
 
 <script src="<?php echo base_url("vendor/vdr.ui/js/vdr/image-gallery-uploader.js") ?>"></script>

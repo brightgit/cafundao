@@ -23,7 +23,7 @@ class Login
 
 	function process_login(){
 
-		$query = "SELECT * FROM users where email = '".$_POST["username"]."' and password = '".md5( $_POST["password"] )."' and is_active = 1";
+		$query = "SELECT * FROM users where email = '".$_POST["username"]."' and password = '".md5( $_POST["password"] )."' and p_login = 1";
 		$res = mysql_query($query) or die_sql();
 
 		if ( mysql_num_rows($res) == 0 ) {

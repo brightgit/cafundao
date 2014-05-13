@@ -20,6 +20,9 @@ class Clientes_list
 			case 'rejeitar':	//Rejeitar o processo
 				$this->rejeitar();
 				break;
+			case 'analise_de_risco':	//Rejeitar o processo
+				$this->analise_de_risco();
+				break;
 			
 			default:
 				$this->ver();
@@ -30,14 +33,29 @@ class Clientes_list
 	function ver(){
 	}
 
+	function analise_de_risco(){
+		$query = "update processes set";
+	}
+
+
 
 	function avaliar(  ) {
-		//Aqui falta colocar para a´nálise de risco caso seja o caso
+		//Aqui falta colocar para análise de risco caso seja o caso
+		//Ir buscar o montante
+		$query = "select processes_form.montante from processes left join processes_form on processes_form.process_id = processes.id where processes.id = '".$_GET["id"]."'";
+		$res = mysql_query($query) or die_sql( $query );
+		$montante = mysql_fetch_array($res);
+		if ( $montante > 50000 ) {
+			$extra_update = ", analise_risco = 1";
+		}else{
+			$extra_update = "";
+		}
 
-		$query = "update processes set avaliacao = 1 where id = '".$_GET["id"]."'";
+
+		$query = "update processes set avaliacao = 1".$extra_update." where id = '".$_GET["id"]."'";
 		mysql_query($query) or die_sql( $query );
 
-		$query = "select * from users where level < 3";
+		$query = "select * from users where p_vote = 1 or p_quality_vote = 1";	//Utilizadores que podem votar
 		$res = mysql_query($query) or die_sql( $query );
 
 		$num_total_votos = mysql_num_rows($res);
@@ -48,7 +66,7 @@ class Clientes_list
 			mysql_query($query) or die_sql( $query );
 		}
 
-		$query = "select * from users where level < 2";
+		$query = "select * from users where p_quality_vote = 1 ";	//Votos de qualidade
 		$res = mysql_query($query) or die_sql( $query );
 
 		$num_total_votos_admin = mysql_num_rows($res);
