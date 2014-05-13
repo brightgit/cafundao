@@ -40,12 +40,13 @@ class Home
 	}
 
 	function get_latest_aprovals() {
-		$query = "select processes.*, count(votos.id) as num
-			from processes 
-				left join votos on votos.process_id = clients.id 
+		$query = "SELECT p.*, count(votos.id) as num
+			from processes p
+				left join votos on votos.process_id = p.id 
 					where 
 					resultado is not null 
-					group by clients.id order by data_avaliacao desc limit 5";
+					group by p.id order by data_avaliacao desc limit 5";
+
 		$res = mysql_query($query) or die_sql( $query );
 		while ( $row = mysql_fetch_object($res) ) {
 			$ret[] = $row;

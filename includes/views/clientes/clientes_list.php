@@ -203,7 +203,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
 
 <!-- Modal Delete Folder -->
 <div class="modal fade" id="remover_pasta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<form action="index.php?mod=files&act=delete_folder" method="post" class="form-horizontal">
+	<form action="index.php?mod=files&amp;act=delete_folder" method="post" class="form-horizontal">
 		<!-- Isto tem que ser alterado sempre passo por uma pasta -->
 		<input type="hidden" name="folder_to_delete_id" id="folder_to_delete_id" value="0" />
 	  <div class="modal-dialog">

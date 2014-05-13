@@ -18,9 +18,7 @@
 	</ol>
 
 	<div class="panel panel-default panel-block panel-title-block">
-		<pre>
-			<?php var_dump($this->mod_data->can_edit) ?>
-		</pre>
+
 		<div class="panel-heading">
 			<div>
 				<i class="icon-list-ul"></i>
@@ -56,6 +54,16 @@
 							<?php if ($can_edit): ?>
 								<div class="pull-right"><button type="button" class="btn-edit-process btn btn-small btn-primary"><i class="icon icon-unlock-alt"></i> &nbsp; Alterar</button></div>
 							<?php endif ?>
+
+							<?php if(!$can_edit): ?>
+							<div class="form-group">
+								<div class="alert alert-dismissable alert-info fade in">
+									<button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-remove"></i></button>
+									<span class="title"><i class="icon-info-sign"></i> ATENÇÃO</span>
+									Os dados referentes a este processo não podem ser editados. Ou o processo já se encontra em avaliação, ou não tem permissão para o fazer.
+								</div>
+							</div>	
+							<?php endif; ?>
 
 							<div class="form-group">
 								

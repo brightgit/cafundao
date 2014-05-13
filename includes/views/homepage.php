@@ -9,12 +9,12 @@ $stats = $home->get_stats();
 <section class="wrapper scrollable" style="opacity: 1;">
 	<section class="title-bar">
 		<div id="dashboard-title">
-			<span class="">DASHBOARD</span>
+			<img src="<?php echo base_url("images/logos/credito-agricola.png") ?>" alt="Crédito Agrícola" />
 		</div>
 	</section>
 	<div class="special-logo pull-right">
         <div class="clearfix">
-            <h5 onclick="window.location='index.php'">
+            <h5 class="text-white" onclick="window.location='index.php'">
                 <span class="title text-right">
                     Virtual Data Room
                 </span>
@@ -28,7 +28,6 @@ $stats = $home->get_stats();
 	<nav class="quick-launch-bar">
 		<ul class="ui-sortable">
 			<li><a href="<?php echo base_url("index.php?mod=home") ?>"><i class="icon-home nav-icon"></i><span class="nav-text">Dashboard</span></a></li>
-			<li><a href="<?php echo base_url("index.php?mod=inbox_list") ?>"><i class="icon-inbox nav-icon"></i><span class="nav-text">Inbox</span></a></li>
 			<li><a href="<?php echo base_url("index.php?mod=files") ?>"><i class="icon-file-alt nav-icon"></i><span class="nav-text">Processos</span></a></li>
 			<li><a href="<?php echo base_url("index.php?mod=tags_list") ?>"><i class="icon-tags nav-icon"></i><span class="nav-text">Tags</span></a></li>		
 			<li><a href="<?php echo base_url("index.php?mod=users_list") ?>"><i class="icon-group nav-icon"></i><span class="nav-text">Utilizadores</span></a></li>
@@ -156,11 +155,11 @@ $stats = $home->get_stats();
 								<span class="title-text">
 									<?php echo $aproval->name ?>
 								</span>
-								<span class="description-text">
+								<span class="description-text votes-thumbs">
 									<!-- a href="<?php echo base_url("index.php?mod=files&id=" . $aproval->id)  ?>"><?php echo $aproval->document_name ?></a -->
-									<?php echo $aproval->num_sim; ?> <i style="color:#aece4e; position:relative; top:3px;" class="icon-sort-up"></i> |
-									<?php echo $aproval->num_nao; ?> <i style="color:#f4c84f; position:relative; bottom:3px;" class="icon-sort-down"></i>
-									de <?php echo $aproval->num; ?>
+									<?php echo $aproval->num_sim; ?> <i style="color:#aece4e" class="icon-thumbs-up-alt"></i>
+									<?php echo $aproval->num_nao; ?> <i style="color:#f4c84f" class="icon-thumbs-down-alt"></i>
+									de <?php echo $aproval->num; ?> votos
 
 								</span>
 							</div>

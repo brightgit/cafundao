@@ -113,7 +113,7 @@ class Process extends Core_admin
 		$sql .= "`client_id` = '".$client_id."', ";
 		$sql .= "`ccc_num` = '".$process["ccc_id"]."', ";
 		$sql .= "`criado_por` = '".$_SESSION["user_bo"]."', ";
-		$sql .= "`data_insercao` = 'CURRENT_TIMESTAMP', ";
+		$sql .= "`data_insercao` = CURRENT_TIMESTAMP, ";
 		$sql .= "`prazo` = '".$process["prazo"]."'";
 
 		$insert_processes = mysql_query($sql); //insere e gera novo id
@@ -142,6 +142,9 @@ class Process extends Core_admin
 		$sql .= " `observacoes` = '".($process["observacoes"])."' ";
 
 		$insert_processes_form = mysql_query($sql);
+
+		//notificar a actualização
+		Tools::notify_add("Processo inserido com sucesso", "success");
 
 		redirect("?mod=clientes_list&process_id=".$process_id);
 	}
