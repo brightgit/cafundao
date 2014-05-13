@@ -76,11 +76,6 @@ $this_user = $users_c->get_user_by_id( $_SESSION["user_bo"] );
 										<td><?php echo $value["email"]; ?></td>
 										<td><?php echo ($value["is_admin"]?'Administrador':'Utilizador'); ?></td>
 										<td>
-											<?php if ($value["is_active"]): ?>
-												<a href="index.php?mod=users_list&act=toggle_active&id=<?php echo $value["id"]; ?>" class="btn btn-xs btn-success">Inactivar</a>
-											<?php else: ?>
-												<a href="index.php?mod=users_list&act=toggle_active&id=<?php echo $value["id"]; ?>" class="btn btn-xs btn-danger">Activar</a>
-											<?php endif ?>
 											<a href="index.php?mod=users_view&id=<?php echo $value["id"]; ?>" class="btn btn-xs btn-primary">Ver</a>
 											<?php if ( !$value["is_admin"] && $this_user["id"] != $value["id"] ): ?>
 												<a href="index.php?mod=users_list&act=delete_user&id=<?php echo $value["id"]; ?>" class="btn btn-xs btn-danger">Eliminar</a>
@@ -125,7 +120,7 @@ $this_user = $users_c->get_user_by_id( $_SESSION["user_bo"] );
 				 					<label>Confirme a password</label>
 				 					<input type="password" name="password2" required="required" class="form-control" placholder="" />
 				 				</div>
-				 				<div class="form-group">
+				 				<!-- div class="form-group">
 				 					<div class="control-label"><label>Activo</label></div>
 				 					<label class="checkbox-inline">
 				 						<input type="radio" name="is_active" value="1" <?php echo (!isset($_POST["is_active"]) || $_POST["is_active"] == 1 )?'checked="checked"':''; ?> />
@@ -135,8 +130,8 @@ $this_user = $users_c->get_user_by_id( $_SESSION["user_bo"] );
 				 						<input type="radio" name="is_active" value="0" <?php echo (isset($_POST["is_active"]) && $_POST["is_active"] != 1 )?'checked="checked"':''; ?> />
 				 						Não
 				 					</label>
-				 				</div>
-				 				<div class="form-group">
+				 				</div -->
+				 				<!-- div class="form-group">
 				 					<div class="control-label"><label>Notificações via email?</label></div>
 				 					<label class="checkbox-inline">
 				 						<input type="radio" name="receive_email" value="1" <?php echo (!isset($_POST["receive_email"]) || $_POST["receive_email"] == 1 )?'checked="checked"':''; ?> />
@@ -146,28 +141,41 @@ $this_user = $users_c->get_user_by_id( $_SESSION["user_bo"] );
 				 						<input type="radio" name="receive_email" value="0" <?php echo (isset($_POST["receive_email"]) && $_POST["receive_email"] != 1 )?'checked="checked"':''; ?> />
 				 						Não
 				 					</label>
-				 				</div>
-				 				<?php if ($this_user["level"] < 3): ?>
+				 				</div -->
+
+
 				 				<div class="form-group">
-				 					<div class="control-label"><label>Nível:</label></div>
-				 					<?php if ($this_user["level"] == 1 ): ?>
-					 					<label class="checkbox">
-					 						<input type="radio" name="level" value="1" <?php echo (isset($_POST["level"]) && $_POST["level"] == 1 )?'checked="checked"':''; ?> />
-					 						Administrador ( com voto de qualidade )
-					 					</label>
-				 					<?php endif ?>
+				 					<div class="control-label"><label>Permissões:</label></div>
 				 					<label class="checkbox">
-				 						<input type="radio" name="level" value="2" <?php echo (!isset($_POST["level"]) || $_POST["level"] == 2 )?'checked="checked"':''; ?> />
-				 						Utilizador ( com voto normal )
+				 						<input type="radio" name="permitions" value="app_admin" />Admin<br />
+				 						<small >Pode gerir utilizadores e alterar métodos de votação. Não pode votar nem ver processos nem é comunicado das decisões processuais.</small>
 				 					</label>
 				 					<label class="checkbox">
-				 						<input type="radio" name="level" value="3" <?php echo (!isset($_POST["level"]) || $_POST["level"] == 3 )?'checked="checked"':''; ?> />
-				 						Gestor de conteúdo ( sem voto )
+				 						<input type="radio" name="permitions" value="gest_conteudo" />Gestor de conteúdo<br />
+				 						<small>Apenas pode adicionar clientes / processos / ficheiros e posteriormente colocá-los em avaliação. Não pode votar, gerir utilizadores nem é comunicado de qualquer decisão processual.</small>
+				 					</label>
+				 					<label class="checkbox">
+				 						<input type="radio" name="permitions" value="cons_admin" />Conselho de Administração<br />
+				 						<small>Apenas pode votar sobre processos abertos.</small>
+				 					</label>
+				 					<label class="checkbox">
+				 						<input type="radio" name="permitions" value="cons_admin_qua" />Conselho de Administração (Voto de qualidade)<br />
+				 						<small>Apenas pode votar sobre processos abertos mas tem voto de qualidade (quando este é aplicável).</small>
+				 					</label>
+				 					<label class="checkbox">
+				 						<input type="radio" name="permitions" value="ana_risco" />Análise de Risco<br />
+				 						<small>Pode adicionar análises de risco aos processos a que tal análsie se aplica. Apenas visualizará os processos que necessitam de análise.</small>
+				 					</label>
+				 					<label class="checkbox">
+				 						<input type="radio" name="permitions" value="jur" />Jurídico (Comunicado quando um processo é Reprovado)
+				 						<small>Apenas é comunicado quando um processo é rejeitado. Não pode fazer login na aplicação.</small>
+				 					</label>
+				 					<label class="checkbox">
+				 						<input type="radio" name="permitions" value="com_sim" />XXXXXX (Comunicado quando um processo é Aprovado)<br />
+				 						<small>Apenas é comunicado quando um processo é aprovado. Não pode fazer login na aplicação.</small>
 				 					</label>
 				 				</div>
-				 				<?php else: ?>
-				 					<input type="hidden" name="level" value="3" />
-				 				<?php endif ?>
+
 
 				 				<div class="form-group">
 				 					<label>Assinatura</label>

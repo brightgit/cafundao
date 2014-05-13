@@ -49,19 +49,19 @@ $clientes = $c->get_processos_and_clients();
 						<div class="list-group-item scrollable jstree-vdr">
 							<ul>
 
-								<?php foreach ($clientes as $cliente): ?>
-									<?php if ( count($cliente["processes"]) > 1 ) : ?>
-										<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="0"><a href="#"><?php echo $cliente["nome"]; ?></a>
-											<ul>
-											<?php foreach ($cliente["processes"] as $key => $value): ?>
-												<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $value["id"]; ?>"><a href="#"><?php echo $value["ccc_num"] ?></a></li>
-											<?php endforeach ?>
-											</ul>
-										</li>
-									<?php else: ?>
-										<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $cliente["processes"][0]["id"]; ?>"><a href="#"><?php echo $cliente["processes"][0]["name"]; ?> - <?php echo $cliente["nome"]; ?></a></li>
-									<?php endif ?>
-								<?php endforeach ?>
+							<?php foreach ($clientes as $cliente): ?>
+								<?php if ( count($cliente["processes"]) > 1 ) : ?>
+									<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="0"><a href="#"><?php echo $cliente["nome"]; ?></a>
+										<ul>
+										<?php foreach ($cliente["processes"] as $key => $value): ?>
+											<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $value["id"]; ?>"><a href="#"><?php echo $value["ccc_num"] ?></a></li>
+										<?php endforeach ?>
+										</ul>
+									</li>
+								<?php else: ?>
+									<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $cliente["processes"][0]["id"]; ?>"><a href="#"><?php echo $cliente["processes"][0]["ccc_num"]; ?> - <?php echo $cliente["nome"]; ?></a></li>
+								<?php endif ?>
+							<?php endforeach ?>
 					</ul>
 				</div>
 			</div>

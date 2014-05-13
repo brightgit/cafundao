@@ -80,26 +80,129 @@ class Users_list
 			tools::notify_add( "As passwords têm que coincidir e ter mais que 8 caracteres.", "error" );
 			$valid = false;
 		}
-
-		$query ="insert into users set ";
+		if ( isset($_POST["user_editing"]) ) {
+			$query ="update users set ";
+		}else{
+			$query ="insert into users set ";
+		}
 		$query .= " name = '".$_POST["name"]."', ";
 		$query .= " email = '".$_POST["email"]."', ";
 		$query .= " password = '".md5($_POST["password"])."', ";
-		$query .= " is_active = '".$_POST["is_active"]."', ";
-		$query .= " receive_email = '".$_POST["receive_email"]."', ";
 		$query .= " assinatura = '".$assinatura."', ";
-		$query .= " level = '".$_POST["level"]."'";
+		$query .= " permitions_string = '".$_POST["permitions"]."', ";
+
+
+		switch ( $_POST["permitions"] ) {
+			case 'app_admin':
+				$query .= " p_login = 1, ";
+				$query .= " p_users = 1, ";
+				$query .= " p_vote_method = 1, ";
+				$query .= " p_vote = 0, ";
+				$query .= " p_quality_vote = 0, ";
+				$query .= " p_upload = 0, ";
+				$query .= " p_submit_to_evaluation = 0, ";
+				$query .= " p_com_sim = 0, ";
+				$query .= " p_com_nao = 0, ";
+				$query .= " p_analise_risco = 0 ";
+				break;
+			case 'gest_conteudo':
+				$query .= " p_login = 1, ";
+				$query .= " p_users = 0, ";
+				$query .= " p_vote_method = 0, ";
+				$query .= " p_vote = 0, ";
+				$query .= " p_quality_vote = 0, ";
+				$query .= " p_upload = 1, ";
+				$query .= " p_submit_to_evaluation = 1, ";
+				$query .= " p_com_sim = 0, ";
+				$query .= " p_com_nao = 0, ";
+				$query .= " p_analise_risco = 0 ";
+				break;
+			case 'cons_admin':
+				$query .= " p_login = 1, ";
+				$query .= " p_users = 0, ";
+				$query .= " p_vote_method = 0, ";
+				$query .= " p_vote = 1, ";
+				$query .= " p_quality_vote = 0, ";
+				$query .= " p_upload = 0, ";
+				$query .= " p_submit_to_evaluation = 0, ";
+				$query .= " p_com_sim = 0, ";
+				$query .= " p_com_nao = 0, ";
+				$query .= " p_analise_risco = 0 ";
+				break;
+			case 'cons_admin_qua':
+				$query .= " p_login = 1, ";
+				$query .= " p_users = 0, ";
+				$query .= " p_vote_method = 0, ";
+				$query .= " p_vote = 1, ";
+				$query .= " p_quality_vote = 1, ";
+				$query .= " p_upload = 0, ";
+				$query .= " p_submit_to_evaluation = 0, ";
+				$query .= " p_com_sim = 0, ";
+				$query .= " p_com_nao = 0, ";
+				$query .= " p_analise_risco = 0 ";
+				break;
+			case 'ana_risco':
+				$query .= " p_login = 1, ";
+				$query .= " p_users = 0, ";
+				$query .= " p_vote_method = 0, ";
+				$query .= " p_vote = 0, ";
+				$query .= " p_quality_vote = 0, ";
+				$query .= " p_upload = 0, ";
+				$query .= " p_submit_to_evaluation = 0, ";
+				$query .= " p_com_sim = 0, ";
+				$query .= " p_com_nao = 0, ";
+				$query .= " p_analise_risco = 1 ";
+				break;
+			case 'jur':
+				$query .= " p_login = 0, ";
+				$query .= " p_users = 0, ";
+				$query .= " p_vote_method = 0, ";
+				$query .= " p_vote = 0, ";
+				$query .= " p_quality_vote = 0, ";
+				$query .= " p_upload = 0, ";
+				$query .= " p_submit_to_evaluation = 0, ";
+				$query .= " p_com_sim = 0, ";
+				$query .= " p_com_nao = 1, ";
+				$query .= " p_analise_risco = 0 ";
+				break;
+			case 'com_sim':
+				$query .= " p_login = 0, ";
+				$query .= " p_users = 0, ";
+				$query .= " p_vote_method = 0, ";
+				$query .= " p_vote = 0, ";
+				$query .= " p_quality_vote = 0, ";
+				$query .= " p_upload = 0, ";
+				$query .= " p_submit_to_evaluation = 0, ";
+				$query .= " p_com_sim = 1, ";
+				$query .= " p_com_nao = 0, ";
+				$query .= " p_analise_risco = 0 ";
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+
+		if ( isset($_POST["user_editing"]) ) {
+			$query .= "where id = '".$_POST["user_editing"]."' ";
+		}else{
+			
+		}
 
 		if ( $valid ) {
 			mysql_query($query) or die_sql( $query );
 			tools::notify_add( "Utilizador adicionado.", "success" );
 		}
 
-		redirect("index.php?mod=users_list");
+		if ( isset($_POST["user_editing"]) ) {
+		redirect("index.php?mod=users_view&id=".$_POST["user_editing"]);
+		}else{
+			redirect("index.php?mod=users_list");
+		}
 
 	}
 	function edit_user(){
-
+		die("This is disabled.");
 		//Fazer o upload da imagem
 		if (empty($_FILES["assinatura"]["name"])) {
 			$assinatura = NULL;

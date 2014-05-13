@@ -158,7 +158,7 @@ $folders = $files->get_all_folders();
 			 		<div class="list-group-item">
 			 			<h4 class="section-title change_to_edit">Editar Utilizador</h4>
 			 			<div class="col-lg-12">
-				 			<form  action="index.php?mod=users_list&act=edit_user" method="post" class="form-horizontal" enctype="multipart/form-data">
+				 			<form  action="index.php?mod=users_list&act=add_user" method="post" class="form-horizontal" enctype="multipart/form-data">
 				 				<input type="hidden" name="user_editing" value="<?php echo $_GET["id"]; ?>" />
 				 				<div class="form-group">
 				 					<label>Nome</label>
@@ -168,27 +168,15 @@ $folders = $files->get_all_folders();
 				 					<label>Email</label>
 				 					<input type="email" name="email" value="<?php echo $user_val["email"] ?>" required="required" class="form-control" placholder="" />
 				 				</div>
-	                    
-		                    
-		                    	<div class="form-group">
-				 					<div class="control-label"><label>Permissão de visualização em</label></div>
-				 					<select placeholder="Seleccione uma pasta" name="user_view_permissions[]" class="form-control select2 populate" multiple="multiple">
-	                        			<?php foreach ($folders as $key => $folder): ?>
-	                        				<option <?php echo ( in_array($folder->id, $folders_view_permissions) )?' selected="selected"':'' ?> value="<?php echo $folder->id ?>"><?php echo $folder->name; ?></option>
-	                        			<?php endforeach ?>
-                        			</select>
-				 				</div>
-
 				 				<div class="form-group">
-				 					<div class="control-label"><label>Permissão de upload em</label></div>
-				 					<select placeholder="Seleccione uma pasta" name="user_upload_permissions[]" class="form-control select2 populate" multiple="multiple">
-	                        			<?php foreach ($folders as $key => $folder): ?>
-	                        				<option <?php echo ( in_array($folder->id, $folders_upload_permissions) )?' selected="selected"':'' ?> value="<?php echo $folder->id ?>"><?php echo $folder->name; ?></option>
-	                        			<?php endforeach ?>
-                        			</select>
+				 					<label>Password</label>
+				 					<input type="password" name="password" required="required" class="form-control" placholder="" />
 				 				</div>
-		                
 				 				<div class="form-group">
+				 					<label>Confirme a password</label>
+				 					<input type="password" name="password2" required="required" class="form-control" placholder="" />
+				 				</div>
+				 				<!-- div class="form-group">
 				 					<div class="control-label"><label>Activo</label></div>
 				 					<label class="checkbox-inline">
 				 						<input type="radio" name="is_active" value="1" <?php echo (!isset($user_val["is_active"]) || $user_val["is_active"] == 1 )?'checked="checked"':''; ?> />
@@ -198,8 +186,8 @@ $folders = $files->get_all_folders();
 				 						<input type="radio" name="is_active" value="0" <?php echo (isset($user_val["is_active"]) && $user_val["is_active"] != 1 )?'checked="checked"':''; ?> />
 				 						Não
 				 					</label>
-				 				</div>
-				 				<div class="form-group">
+				 				</div -->
+				 				<!-- div class="form-group">
 				 					<div class="control-label"><label>Notificações via email?</label></div>
 				 					<label class="checkbox-inline">
 				 						<input type="radio" name="receive_email" value="1" <?php echo (!isset($user_val["receive_email"]) || $user_val["receive_email"] == 1 )?'checked="checked"':''; ?> />
@@ -209,71 +197,49 @@ $folders = $files->get_all_folders();
 				 						<input type="radio" name="receive_email" value="0" <?php echo (isset($user_val["receive_email"]) && $user_val["receive_email"] != 1 )?'checked="checked"':''; ?> />
 				 						Não
 				 					</label>
-				 				</div>
-				 				<?php if ($this_user["level"] < 3): ?>
+				 				</div -->
+
+
 				 				<div class="form-group">
-				 					<div class="control-label"><label>Nível:</label></div>
-				 					<?php if ($this_user["level"] == 1 ): ?>
-					 					<label class="checkbox">
-					 						<input type="radio" name="level" value="1" <?php echo (isset($_POST["level"]) && $_POST["level"] == 1 )?'checked="checked"':''; ?> />
-					 						Administrador ( com voto de qualidade )
-					 					</label>
-				 					<?php endif ?>
+				 					<div class="control-label"><label>Permissões:</label></div>
 				 					<label class="checkbox">
-				 						<input type="radio" name="level" value="2" <?php echo (!isset($_POST["level"]) || $_POST["level"] == 2 )?'checked="checked"':''; ?> />
-				 						Utilizador ( com voto normal )
+				 						<input <?php echo ( $user_val["permitions_string"] == "app_admin" ) ? ' checked="checked"':'';  ?> type="radio" name="permitions" value="app_admin" />Admin<br />
+				 						<small >Pode gerir utilizadores e alterar métodos de votação. Não pode votar nem ver processos nem é comunicado das decisões processuais.</small>
 				 					</label>
 				 					<label class="checkbox">
-				 						<input type="radio" name="level" value="3" <?php echo (!isset($_POST["level"]) || $_POST["level"] == 3 )?'checked="checked"':''; ?> />
-				 						Gestor de conteúdo ( sem voto )
+				 						<input <?php echo ( $user_val["permitions_string"] == "gest_conteudo" ) ? ' checked="checked"':'';  ?> type="radio" name="permitions" value="gest_conteudo" />Gestor de conteúdo<br />
+				 						<small>Apenas pode adicionar clientes / processos / ficheiros e posteriormente colocá-los em avaliação. Não pode votar, gerir utilizadores nem é comunicado de qualquer decisão processual.</small>
 				 					</label>
-				 				</div>
-				 				<?php else: ?>
-				 					<input type="hidden" name="level" value="3" />
-				 				<?php endif ?>
-				 				<div class="form-group">
-				 					<div class="control-label"><label>Pode criar / editar pastas?</label></div>
-				 					<label class="checkbox-inline">
-				 						<input type="radio" name="can_create_folders" value="1" <?php echo (!isset($user_val["can_create_folders"]) || $user_val["can_create_folders"] == 1 )?'checked="checked"':''; ?> />
-				 						Sim
+				 					<label class="checkbox">
+				 						<input <?php echo ( $user_val["permitions_string"] == "cons_admin" ) ? ' checked="checked"':'';  ?> type="radio" name="permitions" value="cons_admin" />Conselho de Administração<br />
+				 						<small>Apenas pode votar sobre processos abertos.</small>
 				 					</label>
-				 					<label class="checkbox-inline">
-				 						<input type="radio" name="can_create_folders" value="0" <?php echo (isset($user_val["can_create_folders"]) && $user_val["can_create_folders"] != 1 )?'checked="checked"':''; ?> />
-				 						Não
+				 					<label class="checkbox">
+				 						<input <?php echo ( $user_val["permitions_string"] == "cons_admin_qua" ) ? ' checked="checked"':'';  ?> type="radio" name="permitions" value="cons_admin_qua" />Conselho de Administração (Voto de qualidade)<br />
+				 						<small>Apenas pode votar sobre processos abertos mas tem voto de qualidade (quando este é aplicável).</small>
 				 					</label>
-				 				</div>
-				 				<div class="form-group">
-				 					<div class="control-label"><label>Pode criar / editar tags?</label></div>
-				 					<label class="checkbox-inline">
-				 						<input type="radio" name="can_create_tags" value="1" <?php echo (!isset($user_val["can_create_tags"]) || $user_val["can_create_tags"] == 1 )?'checked="checked"':''; ?> />
-				 						Sim
+				 					<label class="checkbox">
+				 						<input <?php echo ( $user_val["permitions_string"] == "ana_risco" ) ? ' checked="checked"':'';  ?> type="radio" name="permitions" value="ana_risco" />Análise de Risco<br />
+				 						<small>Pode adicionar análises de risco aos processos a que tal análsie se aplica. Apenas visualizará os processos que necessitam de análise.</small>
 				 					</label>
-				 					<label class="checkbox-inline">
-				 						<input type="radio" name="can_create_tags" value="0" <?php echo (isset($user_val["can_create_tags"]) && $user_val["can_create_tags"] != 1 )?'checked="checked"':''; ?> />
-				 						Não
+				 					<label class="checkbox">
+				 						<input <?php echo ( $user_val["permitions_string"] == "jur" ) ? ' checked="checked"':'';  ?> type="radio" name="permitions" value="jur" />Jurídico (Comunicado quando um processo é Reprovado)
+				 						<small>Apenas é comunicado quando um processo é rejeitado. Não pode fazer login na aplicação.</small>
 				 					</label>
-				 				</div>
-				 				<div class="form-group">
-				 					<div class="control-label"><label>Pode apagar pastas / ficheiros ?</label></div>
-				 					<label class="checkbox-inline">
-				 						<input type="radio" name="can_delete" value="1" <?php echo (!isset($user_val["can_delete"]) || $user_val["can_delete"] == 1 )?'checked="checked"':''; ?> />
-				 						Sim
-				 					</label>
-				 					<label class="checkbox-inline">
-				 						<input type="radio" name="can_delete" value="0" <?php echo (isset($user_val["can_delete"]) && $user_val["can_delete"] != 1 )?'checked="checked"':''; ?> />
-				 						Não
+				 					<label class="checkbox">
+				 						<input <?php echo ( $user_val["permitions_string"] == "com_sim" ) ? ' checked="checked"':'';  ?> type="radio" name="permitions" value="com_sim" />XXXXXX (Comunicado quando um processo é Aprovado)<br />
+				 						<small>Apenas é comunicado quando um processo é aprovado. Não pode fazer login na aplicação.</small>
 				 					</label>
 				 				</div>
 
+
 				 				<div class="form-group">
-				 					<label>Assinatura</label><br />
-				 					<small>Deixe vazio para manter <a target="_blank" href="<?php echo base_url("client_files/".$user_val["assinatura"]); ?>">esta assinatura</a>.</small>
+				 					<label>Assinatura</label>
 				 					<input type="file" name="assinatura" required="required" class="form-control" />
 				 				</div>
-
-
+				 				
 				 				<div class="form-actions">
-				 					<button  type="submit" name="adicionar_utilizador" class="btn btn-primary change_to_edit">Editar Utilizador</button>
+				 					<button  type="submit" name="adicionar_utilizador" class="btn btn-primary change_to_edit">Adicionar Utilizador</button>
 				 				</div>
 				 			</form>
 				 			<div class="clearfix"></div>

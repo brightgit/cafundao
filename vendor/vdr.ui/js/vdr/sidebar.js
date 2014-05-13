@@ -145,20 +145,19 @@ vdr.sidebar = {
 			//close_node clode
 		}).on("select_node.jstree", function(e,data){
 
-			var current_folder_name = data.rslt.obj.children("a").text();
+			//var current_folder_name = data.rslt.obj.children("a").text();
+			var clientid = data.rslt.obj.data("clientid");
+			var processid = data.rslt.obj.data("processid");
 			var folder_id = data.rslt.obj.data("id");
 			//alert(current_folder_name);
+
+
 
 			$.cookie('jstree_selected_folder_id', folder_id, {
 		        expires: 7,
 		        path: '/'
 		    });
 
-			var current_folder_id = data.rslt.obj.data("id");
-			var output_format = data.rslt.obj.data("folder-type") == "images" ? "html" : "html";
-            if(REQUEST_FOLDER != null){
-                REQUEST_FOLDER.abort()
-            }
 
 
 
@@ -166,12 +165,10 @@ vdr.sidebar = {
 				url: BASEPATH + 'index.php',
 				type: 'GET',
 				data: {
-					mod: "ajax",
-					act: data.rslt.obj.data("act"),
-					item_type: data.rslt.obj.data("item-type"),
-					folder_type: data.rslt.obj.data("folder-type"),
-					id: data.rslt.obj.data("id"),
-					output: output_format
+					mod: "clientes_list",
+					act: "list_process",
+					clientid: clientid,
+					processid: processid
 				}
 			})
 			.done(function(response_string) {
@@ -183,25 +180,13 @@ vdr.sidebar = {
 				//popular a tabela e a sidebar com a resposta JSON
 				//json_response = $.parseJSON(response_string);
 
-				if (data.rslt.obj.data("folder-type") == "files") {
-					$("#ajax-content").html(response_string);
-					vdr.sidebar.startdatatables();
-				}else{
-					$("#ajax-content").html(response_string);
-				}
+				$("#ajax-content").html(response_string);
+				//vdr.sidebar.startdatatables();
 
 				//a ser uma galeria, instanciar o imageGallery
 				if(typeof(vdr.imageGallery) != "undefined")
 					vdr.imageGallery.build();
 
-
-				$(".put_name_here").html( current_folder_name );
-				$("#parent_folder").val( current_folder_id );
-				$("#folder_to_delete_id").val( current_folder_id );
-				$("#remove_folder_link").removeClass( "hide" );
-				$("a.fancythis").fancybox({
-					"type" : "image"
-				});
 
 				//tabela
 				// if(typeof(json_response.files) != "undefined"){
