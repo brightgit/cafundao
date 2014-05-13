@@ -1,10 +1,10 @@
 $(document).ready(function(){
 
-	$("input[name=processo_montante]").on("keyup", function(){
-		var valor = $("input[name=processo_montante]").val();
-		$("input[name=processo_montante_extenso]").val(valor.extenso(true));
+	$("input[name=process_montante]").on("keyup", function(){
+		var valor = $("input[name=process_montante]").val();
+		$("input[name=process_montante_extenso]").val(valor.extenso(true));
 
-		if(valor > 25000)
+		if(valor > 50000)
 			$("div.montante-analise-risco").fadeIn();
 		else
 			$("div.montante-analise-risco").fadeOut();

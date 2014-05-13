@@ -33,8 +33,22 @@ class Process extends Core_admin
 	}
 
 	function save(){
+
+		foreach ($_POST as $key => $value) {
+			echo str_replace("process_", "", $key) . "<br />";
+		}
+
+		if(!isset($_POST["client_id"])){
+			self::add_client();
+		}
+
+		die("saved");
+		
+	}
+
+	function add_client(){
+		echo "adding client";
 		var_dump($_POST);
-		die();
 	}
 
 	//view related methods

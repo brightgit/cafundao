@@ -29,7 +29,7 @@ class Home
 	}
 
 	function get_total_pastas() {
-		$query = "select * from documents_categories";
+		$query = "select * from clients";
 		$res = mysql_query($query) or die_sql();
 		return mysql_num_rows($res);
 	}
@@ -40,19 +40,19 @@ class Home
 	}
 
 	function get_latest_aprovals() {
-		$query = "select documents_categories.*, count(votos.id) as num
-			from documents_categories 
-				left join votos on votos.category_id = documents_categories.id 
+		$query = "select processes.*, count(votos.id) as num
+			from processes 
+				left join votos on votos.process_id = clients.id 
 					where 
 					resultado is not null 
-					group by documents_categories.id order by data_avaliacao desc limit 5";
+					group by clients.id order by data_avaliacao desc limit 5";
 		$res = mysql_query($query) or die_sql( $query );
 		while ( $row = mysql_fetch_object($res) ) {
 			$ret[] = $row;
-			$query = "SELECT * FROM votos where vote_casted = 1 and category_id = ".$row->id;
+			$query = "SELECT * FROM votos where vote_casted = 1 and process_id = ".$row->id;
 			$res2 = mysql_query($query);
 			$row->num_sim = mysql_num_rows( $res2 );
-			$query = "SELECT * FROM votos where vote_casted = 0 and category_id = ".$row->id;
+			$query = "SELECT * FROM votos where vote_casted = 0 and process_id = ".$row->id;
 			$res2 = mysql_query($query);
 			$row->num_nao = mysql_num_rows( $res2 );
 		}
@@ -149,7 +149,7 @@ class Home
 		$stats["comments"]["total"] = (int) $comments[0]->total;
 
 		//4 - total de comments
-		$sql = "SELECT COUNT(id) AS total FROM documents_categories UNION SELECT COUNT(id) AS total FROM documents_categories WHERE MONTH(data) < ".$current_month." AND YEAR(data) <= ".$current_year;
+		$sql = "SELECT COUNT(id) AS total FROM clients UNION SELECT COUNT(id) AS total FROM clients WHERE MONTH(data) < ".$current_month." AND YEAR(data) <= ".$current_year;
 		$query = mysql_query($sql);
 		if ($query) {
 			while($row = mysql_fetch_object($query))

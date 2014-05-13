@@ -54,7 +54,7 @@ $clientes = $c->get_processos_and_clients();
 										<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="0"><a href="#"><?php echo $cliente["nome"]; ?></a>
 											<ul>
 											<?php foreach ($cliente["processes"] as $key => $value): ?>
-												<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $value["id"]; ?>"><a href="#"><?php echo $value["name"] ?></a></li>
+												<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $value["id"]; ?>"><a href="#"><?php echo $value["ccc_num"] ?></a></li>
 											<?php endforeach ?>
 											</ul>
 										</li>

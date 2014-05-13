@@ -32,6 +32,7 @@
 	</div>
 
 	<div class="row">
+
 		<div class="col-sm-12">
 			
 			<div class="panel panel-default panel-block">
@@ -71,49 +72,37 @@
 							<h4 class="section-title">2 - A Mutuária solicita e contrata com a CAIXA um empréstimo / crédito</h4>
 
 							<div class="form-group">
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									2.1 Tipo de crédito
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">2.1 Tipo de crédito</label>
 								<div class="col-lg-4">
-									<input class="form-control" value="">
+									<input name="process_tipo_credito" class="form-control" value="">
 								</div>
 							</div>
 
 							<h5><strong>Preencher os campos 2.2 no caso de renovação de CCC;</strong></h5>
 
 							<div class="form-group">
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									2.2. CCC Nº
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">2.2. CCC Nº</label>
 								<div class="col-lg-2">
-									<input class="form-control" name="ccc_num" value="">
+									<input class="form-control" name="process_ccc_id" value="">
 								</div>
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									2.2.1. Data de Vencimento
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">2.2.1. Data de Vencimento</label>
 								<div class="col-lg-2">
-									<input class="datetimepicker-month form-control" value="">
+									<input name="process_data_vencimento" class="datetimepicker-month form-control" value="">
 								</div>
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									2.2.2. Data do último movimento
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">2.2.2. Data do último movimento</label>
 								<div class="col-lg-2">
-									<input class="datetimepicker-month form-control" value="">
+									<input name="process_data_ultimo_movimento" class="datetimepicker-month form-control" value="">
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									2.2.3 Periodicidade de pagamento de juros
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">2.2.3 Periodicidade de pagamento de juros</label>
 								<div class="col-lg-4">
-									<input class="form-control" value="">
+									<input name="process_periodicidade_pagamento_juros" class="form-control" value="">
 								</div>
-								<label for="input-grid-2-2" class="col-lg-2 control-label">
-									2.2.4 Prazo
-								</label>
+								<label class="col-lg-2 control-label">2.2.4 Prazo</label>
 								<div class="col-lg-4">
-									<input id="input-grid-2-2" class="form-control" value="">
+									<input name="process_prazo" class="datetimepicker-month form-control" value="">
 								</div>
 							</div>
 
@@ -122,13 +111,11 @@
 									2.3 Montante (Euro)
 								</label>
 								<div class="col-lg-2">
-									<input class="form-control" name="processo_montante" value="">
+									<input class="form-control" name="process_montante" value="">
 								</div>
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									Extenso
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">Extenso</label>
 								<div class="col-lg-6">
-									<input class="form-control" name="processo_montante_extenso" value="">
+									<input class="form-control" name="process_montante_extenso" value="">
 								</div>
 							</div>
 
@@ -136,16 +123,14 @@
 								<div class="alert alert-dismissable alert-info fade in">
 									<button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-remove"></i></button>
 									<span class="title"><i class="icon-info-sign"></i> ATENÇÃO</span>
-									O processo será encaminhado para o departamento de análise de risco, uma vez que o montante ultrapassa os 25,000&euro;.
+									O processo será encaminhado para o departamento de análise de risco, uma vez que o montante ultrapassa os 50,000&euro;.
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									2.4 Finalidade
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">2.4 Finalidade</label>
 								<div class="col-lg-10">
-									<input class="form-control" value="">
+									<input name="process_finalidade" class="form-control" value="">
 								</div>
 							</div>
 
@@ -154,9 +139,7 @@
 							<div class="form-group">
 
 								<div class="col-lg-4">
-									<label for="input-grid-2-4" class="col-lg-12 control-label">
-										3.1 Responsabilidades na Caixa
-									</label>
+									<label class="col-lg-12 control-label">3.1 Responsabilidades na Caixa</label>
 								</div>
 								<div class="col-lg-4">
 									<table class="table table-condensed">
@@ -171,20 +154,16 @@
 									</table>
 								</div>
 								<div class="col-lg-4">
-									<label for="input-grid-2-4" class="col-lg-6 control-label">
-										3.2. Responsabilidade Global
-									</label>
+									<label for="input-grid-2-4" class="col-lg-6 control-label">3.2. Responsabilidade Global</label>
 									<div class="col-lg-6">
-										<input class="form-control" value="">
+										<input name="process_responsabilidade_global" class="form-control" value="">
 									</div>
 								</div>
 								
 							</div>
 
 							<div class="form-group">
-								<label class="col-lg-12 control-label">
-									3.3. Responsabilidades da Centralização de Riscos do Banco de Portugal
-								</label>
+								<label class="col-lg-12 control-label">3.3. Responsabilidades da Centralização de Riscos do Banco de Portugal</label>
 
 								<table class="table">
 									<tr>
@@ -220,19 +199,15 @@
 							<h4 class="section-title">4 - Conta Depósito</h4>
 
 							<div class="form-group">
-								<label class="col-lg-4 control-label">
-									4. Conta de Depósito à Ordem associada ao empréstimo:
-								</label>
+								<label class="col-lg-4 control-label">4. Conta de Depósito à Ordem associada ao empréstimo:</label>
 								<div class="col-lg-4">
-									<input class="form-control">
+									<input name="process_conta_deposito_ordem_associado" class="form-control">
 								</div>
 
-								<label for="input-grid-2-4" class="col-lg-2 control-label">
-									4.1. Saldo Médio
-								</label>
+								<label for="input-grid-2-4" class="col-lg-2 control-label">4.1. Saldo Médio</label>
 
 								<div class="col-lg-2">
-									<input class="form-control" value="">
+									<input name="process_saldo_medio" class="form-control" value="">
 								</div>
 							</div>
 
@@ -421,19 +396,19 @@
 							<h4 class="section-title">6 - Informações sobre a actividade e património</h4>
 
 							<div class="form-group">
-								<div class="col-lg-12"><textarea id="text-area-auto-resize" rows="10" class="form-control auto-resize"></textarea></div>
+								<div class="col-lg-12"><textarea name="process_informacoes_actividade" rows="10" class="form-control auto-resize"></textarea></div>
 							</div>
 
 							<h4 class="section-title">7 - Parecer do balcão</h4>
 
 							<div class="form-group">
-								<div class="col-lg-12"><textarea id="text-area-auto-resize" rows="10" class="form-control auto-resize"></textarea></div>
+								<div class="col-lg-12"><textarea name="process_informacoes_parecer_balcao" rows="10" class="form-control auto-resize"></textarea></div>
 							</div>
 
 							<h4 class="section-title">8 - Observações</h4>
 
 							<div class="form-group">
-								<div class="col-lg-12"><textarea id="text-area-auto-resize" rows="10" class="form-control auto-resize"></textarea></div>
+								<div class="col-lg-12"><textarea name="process_observacoes" rows="10" class="form-control auto-resize"></textarea></div>
 							</div>
 
 							<div class="form-group">

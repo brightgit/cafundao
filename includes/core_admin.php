@@ -155,14 +155,14 @@ class Core_admin {
 		}
 
 		function die_sql( $sql = "" ){
-			echo '<div style="margin-left:200px;">';
-			echo '<hr />';
-			echo mysql_error();
-			echo '<br />';
-			echo $sql;
-			echo '<hr />';
-			echo "</div>";
-			die();
+			// echo '<div style="margin-left:200px;">';
+			// echo '<hr />';
+			// echo mysql_error();
+			// echo '<br />';
+			// echo $sql;
+			// echo '<hr />';
+			// echo "</div>";
+			// die();
 
 		}
 
