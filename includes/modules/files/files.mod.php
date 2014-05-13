@@ -121,7 +121,7 @@ class Files extends Core_admin
 		$query = "update documents_categories set num_min_votos_qualidade = '".$metade_dos_votos_admin."' where id = '".$_GET["id"]."'";
 		mysql_query($query) or die_sql( $query );
 
-		tools::notify_add( "Cliente colocado para avaliação.", "success" );
+		tools::notify_add( "Processo colocado para avaliação.", "success" );
 		redirect( "index.php?mod=files" );
 
 	}

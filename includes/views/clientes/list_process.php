@@ -15,7 +15,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  ?>
 
 <div class="form-horizontal">
- <h4>Cliente</h4> <a href="index.php?mod=process&act=add&id=<?php echo $cliente["id"]; ?>">Adicionar novo processo a este cliente</a>
+ <h4>Cliente</h4> <a href="index.php?mod=process&amp;act=add&amp;id=<?php echo $cliente["id"]; ?>">Adicionar novo processo a este cliente</a>
  <div class="col-lg-12">
  	<div class="col-lg-6">
  		<div><strong>Nome:</strong> <?php echo $cliente["nome"]; ?></div>
@@ -117,7 +117,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
 switch ($processo["avaliacao"]) {
 	case 0:	//Ainda não está em avaliação
 		?>
-		<p>Este processo ainda não submetido para avaliação. <a href="index.php?mod=clientes_list&act=avaliar&id=<?php echo $processo["id"] ?>" class="btn btn-primary pull-right">Submeter para avaliação</a> </p>
+		<p>Este processo ainda não foi submetido para avaliação. <a href="index.php?mod=clientes_list&act=avaliar&id=<?php echo $processo["id"] ?>" class="btn btn-primary pull-right">Submeter para avaliação</a> </p>
 		<?php
 		break;
 	case 1:	//Em avaliação

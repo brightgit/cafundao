@@ -412,10 +412,12 @@
 							</div>
 
 							<div class="form-group">
-								<div class="alert alert-dismissable alert-info fade in">
-									<button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-remove"></i></button>
-									<span class="title"><i class="icon-info-sign"></i> INFO</span>
-									A assinatura, local e data, serão automaticamente adicionados após decisão final.
+								<div class="col-lg-12">
+									<div class="alert alert-dismissable alert-info fade in">
+										<button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-remove"></i></button>
+										<span class="title"><i class="icon-info-sign"></i> INFO</span>
+										A assinatura, local e data, serão automaticamente adicionados após decisão final.
+									</div>
 								</div>
 							</div>
 
