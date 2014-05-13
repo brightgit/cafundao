@@ -51,7 +51,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
 
  	<div class="col-lg-6"> 
  		<div><a href="index.php?mod=process&act=view&process_id=<?php echo $processo["id"]; ?>"><i class="icon-file-text"></i> Ver processo</a></div>
- 		<?php if ($processo["avaliacao"] == 0): ?>
+ 		<?php if ($processo["avaliacao"] == 0 || $this_user["p_upload"] != 1): ?>
  			<div><a href="index.php?mod=process&act=add&process_id=<?php echo $processo["id"]; ?>"><i class="icon-edit"></i> Editar processo</a></div>
  		<?php endif ?>
 	</div>
@@ -61,7 +61,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  
  <div class="panel gallery-uploader active">
  <h4>Outros Ficheiros</h4>
- <?php if ( $processo["avaliacao"] == 0 ): ?>
+ <?php if ( $processo["avaliacao"] == 0 || $this_user["p_upload"] != 1 ): ?>
 	 <a href="Javascript:void(0);" onclick="$('.dropzone-container').toggleClass('hide'); return false;" class="btn btn-link">
 	    <i class="icon-plus-sign"></i>
 	    <span>
@@ -90,7 +90,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
             <div class="gallery-container files-container">
             </div>
 
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-condensed">
                 <thead>
                     <tr>
                         <th style="width:30px;">#</th>
@@ -125,12 +125,16 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  <?php 
 //Vou colocar aqui a valição do switch para melhor visibilidade
  if ( $processo["avaliacao"] == 0 ) {	//Processso ainda sem avaliação
- 	$var = 0.1;	//Se for 0 há conflito
+ 	if ($this_user["p_upload"]) {
+ 		$var = 0.1;	//Se for 0 há conflito
+ 	}else{
+ 		$var = FALSE;
+ 	}
  }elseif( $processo["avaliacao"] == 1 ) {	//Processo em avaliação
- 	if ( $processo["analise_risco"] == 1 && $this_user["p_analise_risco"] == 1 ) {	//U utilizador não pode votar
- 		$var = 1.2;
+ 	if ( $processo["analise_risco"] == 1 && $this_user["p_analise_risco"] == 1  ) {	//U utilizador não pode votar
+ 		$var = 1.2;	//Analisar o risco
  	}elseif( !isset($processo["analise_risco"]) ){	//O utilizador pode votar e não é necessário análise de risco
- 		$var = 1.1;
+ 		$var = 1.1;	//Votar
  	}elseif( !$this_user["p_vote"] && !$this_user["p_quality_vote"] ){	//Está em análise de risco e o utilizador pode analisar
  		$var = false;
  	}else{
@@ -138,7 +142,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  	}
 
  }elseif( $processo["avaliacao"] == 2 && !$this_user["p_vote"] && !$this_user["p_quality_vote"] ){	//Já terminou a votação e o utilizador pode votar
- 	$var = 2;
+ 	$var = 2;	//Resultado da votação
  }
 
 
@@ -188,7 +192,7 @@ switch ($var) {
 						$response = "default";
 						break;
 				}
-				echo '<span class="btn btn-'.( ($voto["level"] == 1)?'s':'xs' ).' not-bold btn-'.$response.'">'.$voto["username"].'</span> ';
+				echo '<span class="btn btn-'.( ($voto["p_quality_vote"] == 1)?'s':'xs' ).' not-bold btn-'.$response.'">'.$voto["username"].'</span> ';
 			}
 			 ?>
 		
