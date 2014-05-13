@@ -40,7 +40,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  	</div>
 
  	<div class="col-lg-6"> 
- 		<div><a href="index.php?mod=process&act=view&client_id=<?php echo $processo["id"]; ?>"><i class="icon-file-text"></i> Ver processo</a></div>
+ 		<div><a href="index.php?mod=process&amp;act=view&amp;process_id=<?php echo $processo["id"]; ?>"><i class="icon-file-text"></i> Ver processo</a></div>
  		<?php if ($processo["avaliacao"] == 0): ?>
  			<div><a href="index.php?mod=process&act=add&client_id=<?php echo $processo["id"]; ?>"><i class="icon-edit"></i> Editar processo</a></div>
  		<?php endif ?>

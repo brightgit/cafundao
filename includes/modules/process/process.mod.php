@@ -32,17 +32,55 @@ class Process extends Core_admin
 		return false;
 	}
 
-	function save(){
+	//actualiza informações a um processo que ainda não esteja actualizado
+	function update(){
 
-		if(!isset($_POST["client_id"])){
-			$client_id = self::add_client();
-		}
-		else{
-			$client_id = $_POST["client_id"];
-			//$client_id = 15; //remover
-		}
+		$process_id = $_GET["process_id"];
+		$client_id = $_POST["client_id"];
+		$process = $this->bind_from_post();
 
-		//salvar processo e associar a cliente
+		//associar o processo a um cliente na tabela processes
+		$sql = "UPDATE processes SET ";
+		$sql .= "`ccc_num` = '".$process["ccc_id"]."', ";
+		$sql .= "`criado_por` = '".$_SESSION["user_bo"]."', ";
+		$sql .= "`data_insercao` = 'CURRENT_TIMESTAMP', ";
+		$sql .= "`prazo` = '".$process["prazo"]."'";
+		$sql .= " WHERE id = ".$process_id;
+
+		$insert_processes = mysql_query($sql); //actualiza
+
+		//inserir os dados de preenchimento na tabela processes_form
+		$sql = "UPDATE processes_form SET ";
+		$sql .= " `process_id` = '".$process_id."', ";
+		$sql .= " `ccc_id` = '".$process["ccc_id"]."', ";
+		$sql .= " `tipo_credito` = '".$process["tipo_credito"]."', ";
+		$sql .= " `data_vencimento` = '".$process["data_vencimento"]."', ";
+		$sql .= " `data_ultimo_movimento` = '".$process["data_ultimo_movimento"]."', ";
+		$sql .= " `periodicidade_pagamento_juros` = '".$process["periodicidade_pagamento_juros"]."', ";
+		$sql .= " `montante` = '".$process["montante"]."', ";
+		$sql .= " `montante_extenso` = '".($process["montante_extenso"])."', ";
+		$sql .= " `finalidade` = '".$process["finalidade"]."', ";
+		$sql .= " `responsabilidade_global` = '".$process["responsabilidade_global"]."', ";
+		$sql .= " `conta_deposito_ordem_associado` = '".$process["conta_deposito_ordem_associado"]."', ";
+		$sql .= " `saldo_medio` = '".$process["saldo_medio"]."', ";
+		$sql .= " `informacoes_actividade` = '".$process["informacoes_actividade"]."', ";
+		$sql .= " `informacoes_parecer_balcao` = '".$process["informacoes_parecer_balcao"]."', ";
+		$sql .= " `observacoes` = '".($process["observacoes"])."' ";
+		$sql .= " WHERE process_id = " . $process_id;
+
+		$insert_processes_form = mysql_query($sql);
+
+		//notificar a actualização
+		Tools::notify_add("Processo actualizado com sucesso", "success");
+
+		//voltar à página
+		redirect("?mod=clientes_list&process_id=".$process_id);
+
+	}
+
+	//carrega os valores de post para uma var, pode ser feita aqui validação
+	function bind_from_post(){
+
 		$process["tipo_credito"] = $_POST["process_tipo_credito"];
 		$process["ccc_id"] = $_POST["process_ccc_id"];
 		$process["data_vencimento"] = $_POST["process_data_vencimento"];
@@ -59,11 +97,23 @@ class Process extends Core_admin
 		$process["informacoes_parecer_balcao"] = $_POST["process_informacoes_parecer_balcao"];
 		$process["observacoes"] = $_POST["process_observacoes"];
 
+		return $process;
+	}
+
+	function save(){
+
+		//determinar ou inserir um novo cliente
+		$client_id = (!isset($_POST["client_id"])) ? self::add_client() : $_POST["client_id"];
+
+		//salvar processo e associar a cliente
+		$process = $this->bind_from_post();
+
 		//associar o processo a um cliente na tabela processes
 		$sql = "INSERT INTO processes SET ";
 		$sql .= "`client_id` = '".$client_id."', ";
 		$sql .= "`ccc_num` = '".$process["ccc_id"]."', ";
 		$sql .= "`criado_por` = '".$_SESSION["user_bo"]."', ";
+		$sql .= "`data_insercao` = 'CURRENT_TIMESTAMP', ";
 		$sql .= "`prazo` = '".$process["prazo"]."'";
 
 		$insert_processes = mysql_query($sql); //insere e gera novo id
@@ -94,8 +144,6 @@ class Process extends Core_admin
 		$insert_processes_form = mysql_query($sql);
 
 		redirect("?mod=clientes_list&process_id=".$process_id);
-
-		
 	}
 
 	//insere cliente e retorna o id
@@ -126,6 +174,28 @@ class Process extends Core_admin
 
 	}
 
+	function get_info($process_id){
+
+		//determinar info de quem está a consultar, para realizar operações na view
+		require_once(base_path("includes/modules/users/users.mod.php"));
+		$this->user_info = Users::get_user_by_id($_SESSION["user_bo"]);
+
+		$sql = "SELECT p.id process_id, c.nome  cliente_nome, c.id cliente_id , c.numero_cliente cliente_numero, c.telemovel cliente_telemovel, c.balcao cliente_balcao, c.telemovel, c.nipc cliente_nipc, p.*, pf.* FROM processes p INNER JOIN clients c ON c.id = p.client_id INNER JOIN processes_form pf ON pf.process_id = p.id WHERE p.id = " . $process_id;
+		$query = mysql_query($sql);
+		
+		if($query){
+			$result = mysql_fetch_object($query);
+			
+			//determinar se é possível editar
+			$this->can_edit = ($this->user_info["p_upload"] == 1 && $result->avaliacao == 0) ? true : false;
+
+			return $result;	
+		}
+
+		return false;
+		
+	}
+
 	//view related methods
 	function add(){
 		if ( !isset($_POST["ccc_num"]) ) {
@@ -138,6 +208,12 @@ class Process extends Core_admin
 			# code...
 		}
 
+	}
+
+	function view(){
+		$process_id = $_GET["process_id"];
+		$this->process_info = self::get_info($process_id);
+		$this->view_file = "process/process_view";
 	}
 
 	function list_all(){
