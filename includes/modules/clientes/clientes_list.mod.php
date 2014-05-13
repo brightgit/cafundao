@@ -34,7 +34,10 @@ class Clientes_list
 	}
 
 	function analise_de_risco(){
-		$query = "update processes set";
+		$query = "update processes set analise_risco = NULL, data_analise_risco = NOW(), analise_risco_texto = '".mysql_real_escape_string($_POST["analise_risco_texto"])."', analise_risco_user = '".$_SESSION["user_bo"]."' where id = '".$_POST["process_id"]."'";
+		mysql_query($query) or die_sql( $query );
+		tools::notify_add( "Análise submetida com sucesso.", "success" );
+		redirect( "index.php?mod=clientes_list&id=".$_POST["process_id"] );
 	}
 
 
@@ -144,33 +147,33 @@ class Clientes_list
 
 
 		//Ir buscar num votos admins
-		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.level = '1' and votos.vote_casted = 1";
+		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.p_quality_vote = 1 and votos.vote_casted = 1";
 		$res = mysql_query($query) or die_sql( $query );
 		$num_votos_admin = mysql_num_rows( $res );
 
 		//Ir buscar num votos normais
-		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.level = '2' and votos.vote_casted = 1";
+		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.p_quality_vote = 0 and votos.vote_casted = 1";
 		$res = mysql_query($query) or die_sql( $query );
 		$num_votos_normais = mysql_num_rows( $res );
 
 		//Ir buscar num votos admins
-		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.level = '1' and votos.vote_casted is null";
+		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.p_quality_vote = 1 and votos.vote_casted is null";
 		$res = mysql_query($query) or die_sql( $query );
 		$num_votos_admin_falta = mysql_num_rows( $res );
 
 		//Ir buscar num votos normais
-		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.level = '2' and votos.vote_casted is null";
+		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.p_quality_vote = 0 and votos.vote_casted is null";
 		$res = mysql_query($query) or die_sql( $query );
 		$num_votos_normais_falta = mysql_num_rows( $res );
 
 
 		//Ir buscar num votos admins
-		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.level = '1'";
+		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.p_quality_vote = 1";
 		$res = mysql_query($query) or die_sql( $query );
 		$num_votos_total_admin = mysql_num_rows( $res );
 
 		//Ir buscar num votos normais
-		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.level = '2'";
+		$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$client_id."' and users.p_quality_vote = 0";
 		$res = mysql_query($query) or die_sql( $query );
 		$num_votos_total_normais = mysql_num_rows( $res );
 

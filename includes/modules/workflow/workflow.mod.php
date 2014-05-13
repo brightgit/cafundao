@@ -34,7 +34,7 @@ class Workflow
 	}
 
 	function get_client_votos( $cliente_id ) {
-		$query = "select votos.*, users.level, users.id as is_user, users.name as username from votos left join users on users.id = votos.user_id where votos.process_id = '".$cliente_id."'";
+		$query = "select votos.*, users.p_quality_vote, users.id as is_user, users.name as username from votos left join users on users.id = votos.user_id where votos.process_id = '".$cliente_id."'";
 		$res = mysql_query($query);
 		while ( $row = mysql_fetch_array($res) ) {
 			$ret[] = $row;

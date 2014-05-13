@@ -62,12 +62,39 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
 									<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="0"><a href="#"><?php echo $cliente["nome"]; ?></a>
 										<ul>
 										<?php foreach ($cliente["processes"] as $key => $value): ?>
-											<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $value["id"]; ?>"><a href="#"><?php echo $value["ccc_num"] ?></a></li>
+											<?php
+											if ( $value["analise_risco"] == 1 ) {
+												$class="analise_risco";
+											}elseif( $value["avaliacao"] == 0 ){
+												$class = "para_avaliacao";
+											}elseif( $value["avaliacao"] == 2 ) {
+												$class = "avaliado";
+											}elseif( $value["avaliacao"] == 1 && $value["resultado"] == 1 ) {
+												$class="aprovado";
+											}elseif( $value["avaliacao"] == 1 && $value["resultado"] == 0 ) {
+												$class="reprovado";
+											}
+											?>
+											<li class="<?php echo $class; ?>" data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $value["id"]; ?>"><a href="#"><?php echo $value["ccc_num"] ?></a></li>
 										<?php endforeach ?>
 										</ul>
 									</li>
 								<?php else: ?>
-									<li data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $cliente["processes"][0]["id"]; ?>"><a href="#"><?php echo $cliente["processes"][0]["ccc_num"]; ?> - <?php echo $cliente["nome"]; ?></a></li>
+									<?php
+									if ( $cliente["processes"][0]["analise_risco"] == 1 ) {
+										$class="analise_risco";
+									}elseif( $cliente["processes"][0]["avaliacao"] == 0 ){
+										$class = "para_avaliacao";
+									}elseif( $cliente["processes"][0]["avaliacao"] == 2 ) {
+										$class = "avaliado";
+									}elseif( $cliente["processes"][0]["avaliacao"] == 1 && $cliente["processes"][0]["resultado"] == 1 ) {
+										$class="aprovado";
+									}elseif( $cliente["processes"][0]["avaliacao"] == 1 && $cliente["processes"][0]["resultado"] == 0 ) {
+										$class="reprovado";
+									}
+									?>
+
+									<li class="<?php echo $class; ?>" data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $cliente["processes"][0]["id"]; ?>"><a href="#"><?php echo $cliente["processes"][0]["ccc_num"]; ?> - <?php echo $cliente["nome"]; ?></a></li>
 								<?php endif ?>
 							<?php endforeach ?>
 					</ul>
@@ -105,7 +132,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
 				<form action="index.php" method="get" >
 					<input type="hidden" name="mod" value="pesquisa_avancada" />
 					<div class="input-group">
-					  <input type="text" name="nome_ficheiro" class="form-control" placeholder="Nome do ficheiro" required="required">
+					  <input type="text" name="processo" class="form-control" placeholder="Nome do ficheiro" required="required">
 					  <span class="input-group-btn">
 	       				<button class="btn btn-default" style="background-color:#3699d2;"  type="submit">Pesquisa Global</button>
 				  	  </span>

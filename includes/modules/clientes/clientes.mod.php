@@ -10,13 +10,24 @@ class Clientes
 	
 	public function get_processos_and_clients() {
 
-		//$this_u = $u->get_user_by_id( $_SESSION["user_bo"] );
+		require_once( base_path( "includes/modules/users/users.mod.php" ) );
+
+		$u = new Users();
+		$this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de comentários
+
+		if ( $this_user["p_analise_risco"] ) {
+			$extra_where = " and avaliacao = 2";	//Para análise de risco pode-se ver processos anteriores mas não se pode ver os não terminados.
+		}else{
+			$extra_where = "";
+		}
+
 
 		$clientes = $this->get_all_clientes();
 
 
+
 		foreach ($clientes as $key => $value) {
-			$query = "select * from processes where client_id = '".$value["id"]."' order by `data` asc";
+			$query = "select * from processes where client_id = '".$value["id"]."'".$extra_where." order by `data` asc";
 			$res = mysql_query($query) or die_sql( $query );
 
 			while ( $row = mysql_fetch_array($res) ) {
