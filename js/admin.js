@@ -1,5 +1,21 @@
 $(document).ready(function(){
 
+	//permitir edição de campos na visualização de processo
+	$("button.btn-edit-process").click(function(){
+		
+		var fields = $("div.seamless-inputs").find("input, textarea");
+
+		$(".btn-confirm-changes").removeAttr("disabled");
+
+		for (var i = fields.length - 1; i >= 0; i--) {
+			current_input = $(fields[i]);
+			if(current_input.data("editable") == 0)
+				continue;
+			else
+				current_input.removeAttr('readonly');
+		};
+	})
+
 	$("input[name=process_montante]").on("keyup", function(){
 		var valor = $("input[name=process_montante]").val();
 		$("input[name=process_montante_extenso]").val(valor.extenso(true));

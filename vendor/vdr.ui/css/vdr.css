@@ -1582,3 +1582,18 @@ table.table caption{
 .montante-analise-risco{
 	display: none;
 }
+
+.seamless-inputs input[readonly], .seamless-inputs textarea[readonly]{
+	border: 0;
+	font-weight: bold;
+	font-style: italic;
+	cursor: default !important;
+}
+
+.seamless-inputs input[readonly]:focus, .seamless-inputs textarea[readonly]:focus{
+	outline: none;
+	border-color: transparent;
+	outline: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
