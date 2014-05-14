@@ -81,17 +81,17 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
 									</li>
 								<?php else: ?>
 									<?php
-									if ( $cliente["processes"][0]["analise_risco"] == 1 ) {
-										$class="analise_risco";
-									}elseif( $cliente["processes"][0]["avaliacao"] == 0 ){
-										$class = "para_avaliacao";
-									}elseif( $cliente["processes"][0]["avaliacao"] == 2 ) {
-										$class = "avaliado";
-									}elseif( $cliente["processes"][0]["avaliacao"] == 1 && $cliente["processes"][0]["resultado"] == 1 ) {
-										$class="aprovado";
-									}elseif( $cliente["processes"][0]["avaliacao"] == 1 && $cliente["processes"][0]["resultado"] == 0 ) {
-										$class="reprovado";
-									}
+										if ( $cliente["processes"][0]["analise_risco"] == 1 ) {
+											$class="analise_risco";
+										}elseif( $cliente["processes"][0]["avaliacao"] == 0 ){
+											$class = "incompleto";
+										}elseif( $cliente["processes"][0]["avaliacao"] == 1 ) {
+											$class = "para_avaliacao";
+										}elseif( $cliente["processes"][0]["avaliacao"] == 2 && $cliente["processes"][0]["resultado"] == 1 ) {
+											$class="aprovado";
+										}elseif( $cliente["processes"][0]["avaliacao"] == 2 && $cliente["processes"][0]["resultado"] == 0 ) {
+											$class="reprovado";
+										}
 									?>
 
 									<li class="<?php echo $class; ?>" data-clientid="<?php echo $cliente["id"]; ?>" data-processid="<?php echo $cliente["processes"][0]["id"]; ?>"><a href="#"><?php echo $cliente["processes"][0]["ccc_num"]; ?> - <?php echo $cliente["nome"]; ?></a></li>

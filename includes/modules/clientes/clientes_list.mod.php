@@ -23,6 +23,9 @@ class Clientes_list
 			case 'analise_de_risco':	//Rejeitar o processo
 				$this->analise_de_risco();
 				break;
+			case 'change_voting_method':	//Rejeitar o processo
+				$this->change_voting_method();
+				break;
 			
 			default:
 				$this->ver();
@@ -40,6 +43,30 @@ class Clientes_list
 		redirect( "index.php?mod=clientes_list&id=".$_POST["process_id"] );
 	}
 
+	function change_voting_method(){
+		if (!isset($_POST["processo"])) {
+			tools::notify_add("Método de decisão não alterado pois nenhum processo foi escolhido.", "error");
+			redirect("index.php?mod=workflow_view");
+		}
+		//Processos a actualizar
+		$processes_to_change = implode(",", $_POST["processo"]);
+		$query = "update processes set ";
+		$query .= " metodo_voto = '".$_POST["metodo_voto"]."', ";
+		$query .= " num_min_votos = '".$_POST["num_min_votos"]."', ";
+		$query .= " num_min_votos_qualidade = '".$_POST["num_min_votos_qualidade"]."' ";
+		$query .= " where id in (".$processes_to_change.")";
+		mysql_query( $query ) or die_sql( $query );
+
+
+		//Actualizar o resultado
+		foreach ($_POST["processo"] as $key => $value) {
+			$this->update_client_vote( $value );
+		}
+
+		redirect("index.php?mod=workflow_view");
+
+
+	}
 
 
 	function avaliar(  ) {

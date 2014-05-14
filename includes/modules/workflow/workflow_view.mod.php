@@ -19,6 +19,9 @@ class Workflow_view
 			case 'actualizar_cliente':
 				$this->actualizar_cliente();
 				break;
+			case 'actualizar_processos':
+				$this->actualizar_processos();
+				break;
 		}
 	}
 

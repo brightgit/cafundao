@@ -152,9 +152,9 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  	$var = false;
  }
 
-echo '<hr />';
-var_dump($var);
-echo '<hr />';
+//echo '<hr />';
+//var_dump($var);
+//echo '<hr />';
 
 switch ($var) {
 	case 0.1:	//Ainda não está em avaliação

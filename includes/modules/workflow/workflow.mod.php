@@ -10,8 +10,31 @@ class Workflow
 		# code...
 	}
 
+
+	function get_all_processes() {
+		$query = "select * from processes where avaliacao = 1 and analise_risco != 1";
+		$res = mysql_query($query) or die_sql( $query );
+		while ( $row = mysql_fetch_array($res) ) {
+			$aux = $row;
+			$query = "select * from votos left join users on users.id = votos.user_id where process_id = '".$row["id"]."'";
+			$res2 = mysql_query($query) or die_sql( $query );
+			$aux["num_votos"]["admins"] = 0;
+			$aux["num_votos"]["normal"] = 0;
+			while( $row2 = mysql_fetch_array($res2) ) {
+				if ($row2["p_quality_vote"] == 1) {
+					$aux["num_votos"]["admins"]++;
+				}else {
+					$aux["num_votos"]["normal"]++;
+				}
+			}
+
+			$ret[] = $aux;
+		}
+		return $ret;
+	}
+
 	function get_all_evaluations(  ) {
-		$query = "select * from processes where parent = 1 and avaliacao = 1";
+		$query = "select processes.* from processes where avaliacao = 1 ";
 		$res = mysql_query($query) or die_sql( $query );
 		while ( $row = mysql_fetch_array($res) ) {
 			unset($aux);

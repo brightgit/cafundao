@@ -16,7 +16,9 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
 		<?php if ($this_user["p_users"]): ?>
 			<li><a href="<?php echo base_url("index.php?mod=users_list") ?>"><i class="icon-group nav-icon"></i><span class="nav-text">Utilizadores</span></a></li>
 		<?php endif ?>
-		<!-- li><a href="<?php echo base_url("index.php?mod=workflow_view") ?>"><i class="icon-code-fork nav-icon"></i><span class="nav-text">Workflow</span></a></li -->
+		<?php if ($this_user["p_users"]): ?>
+			<li><a href="<?php echo base_url("index.php?mod=workflow_view") ?>"><i class="icon-code-fork nav-icon"></i><span class="nav-text">Método de decisão</span></a></li>
+		<?php endif ?>
 		<?php if ($this_user["p_users"]): ?>
 			<li><a href="<?php echo base_url("index.php?mod=access_control_list") ?>"><i class="icon-signin nav-icon"></i><span class="nav-text">Controlo de acessos</span></a></li>
 		<?php endif ?>
