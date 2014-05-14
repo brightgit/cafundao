@@ -48,7 +48,7 @@ class Clientes_list
 		$query = "select processes_form.montante from processes left join processes_form on processes_form.process_id = processes.id where processes.id = '".$_GET["id"]."'";
 		$res = mysql_query($query) or die_sql( $query );
 		$montante = mysql_fetch_array($res);
-		if ( $montante > 50000 ) {
+		if ( $montante["montante"] > 50000 ) {
 			$extra_update = ", analise_risco = 1";
 		}else{
 			$extra_update = "";

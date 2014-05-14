@@ -151,12 +151,9 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
 switch ($var) {
 	case 0.1:	//Ainda não está em avaliação
 		?>
-<<<<<<< HEAD
+
 		<p>Este processo ainda não foi submetido para avaliação. <a href="index.php?mod=clientes_list&act=avaliar&id=<?php echo $processo["id"] ?>" class="btn btn-primary pull-right">Submeter para avaliação</a> </p>
-=======
- 		<h4>Estado</h4>
-		<p>Este processo ainda não submetido para avaliação. <a href="index.php?mod=clientes_list&act=avaliar&id=<?php echo $processo["id"] ?>" class="btn btn-primary pull-right">Submeter para avaliação</a> </p>
->>>>>>> FETCH_HEAD
+
 		<?php
 		break;
 	case 1.1:	//Em avaliação
@@ -253,6 +250,11 @@ switch ($var) {
 		<?php endif ?>
 		<?php
 		break;
+
+
+	default:
+		echo "<p>Este processo encontra-se em análise de risco</p>";
+	break;
 }
   ?>
 
