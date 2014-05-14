@@ -72,8 +72,7 @@ class Upload_lib extends Settings
 
 	}
 
-	public function upload( $file_path ){
-
+	public function upload( $file_path){
 
 		if ( !$this->_check_file_info() ) {
 			echo "Something wrong in _check_file_info() <br />";

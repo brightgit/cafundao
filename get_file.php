@@ -17,7 +17,7 @@ $prefix = "/home/vdr/virtualdataroom_upload/";
 
 if(true){
 
-	$sql = "SELECT id, title, category,file from documents where id = $id";
+	$sql = "SELECT id, title, process_id,file from documents where id = $id";
 	$query = mysql_query($sql);
 	$row = mysql_fetch_object($query);
 
