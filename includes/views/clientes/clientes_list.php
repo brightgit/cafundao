@@ -66,12 +66,12 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
 											if ( $value["analise_risco"] == 1 ) {
 												$class="analise_risco";
 											}elseif( $value["avaliacao"] == 0 ){
+												$class = "incompleto";
+											}elseif( $value["avaliacao"] == 1 ) {
 												$class = "para_avaliacao";
-											}elseif( $value["avaliacao"] == 2 ) {
-												$class = "avaliado";
-											}elseif( $value["avaliacao"] == 1 && $value["resultado"] == 1 ) {
+											}elseif( $value["avaliacao"] == 2 && $value["resultado"] == 1 ) {
 												$class="aprovado";
-											}elseif( $value["avaliacao"] == 1 && $value["resultado"] == 0 ) {
+											}elseif( $value["avaliacao"] == 2 && $value["resultado"] == 0 ) {
 												$class="reprovado";
 											}
 											?>

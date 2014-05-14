@@ -124,3 +124,9 @@ td, th { font-size: 13px; }
 .padding-10 {
 	padding: 10px !important;
 }
+
+li.aprovado a { background-color: #aece4e !important; }
+li.incompleto a { background-color: #aaa !important; }
+li.para_avaliacao a { background-color: #f4c84f !important; }
+li.reprovado a { background-color: #e77755 !important; }
+li.analise_risco a { background-color: #aaa !important; }

@@ -46,15 +46,12 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
 
  	<div class="col-lg-6">
  		<div><strong>CCC nº:</strong> <?php echo $processo["ccc_num"]; ?></div>
- 		<div><strong>#:</strong> <?php echo $processo["id"]; ?></div>
+ 		<div><strong>Id Aplicação:</strong> <?php echo $processo["id"]; ?></div>
  		<div><strong>Prazo:</strong> <?php echo tools::time_for( $processo["prazo"] ); ?></div>
  	</div>
 
  	<div class="col-lg-6"> 
  		<div><a href="index.php?mod=process&act=view&process_id=<?php echo $processo["id"]; ?>"><i class="icon-file-text"></i> Ver processo</a></div>
- 		<?php if ($processo["avaliacao"] == 0 || $this_user["p_upload"] != 1): ?>
- 			<div><a href="index.php?mod=process&act=add&process_id=<?php echo $processo["id"]; ?>"><i class="icon-edit"></i> Editar processo</a></div>
- 		<?php endif ?>
 	</div>
  </div>
 
@@ -62,7 +59,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  
  <div class="panel gallery-uploader active">
  <h4>Outros Ficheiros</h4>
- <?php if ( $processo["avaliacao"] == 0 || $this_user["p_upload"] != 1 ): ?>
+ <?php if ( $processo["avaliacao"] == 0 && $this_user["p_upload"] == 1 ): ?>
 	 <a href="Javascript:void(0);" onclick="$('.dropzone-container').toggleClass('hide'); return false;" class="btn btn-link">
 	    <i class="icon-plus-sign"></i>
 	    <span>
@@ -124,6 +121,8 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
 
  <div class="clearfix"></div>
  <?php 
+
+
 //Vou colocar aqui a valição do switch para melhor visibilidade
  if ( $processo["avaliacao"] == 0 ) {	//Processso ainda sem avaliação
  	if ($this_user["p_upload"]) {
@@ -132,9 +131,14 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  		$var = FALSE;
  	}
  }elseif( $processo["avaliacao"] == 1 ) {	//Processo em avaliação
- 	if ( $processo["analise_risco"] == 1 && $this_user["p_analise_risco"] == 1  ) {	//U utilizador não pode votar
- 		$var = 1.2;	//Analisar o risco
- 	}elseif( !isset($processo["analise_risco"]) ){	//O utilizador pode votar e não é necessário análise de risco
+
+ 	if ( $processo["analise_risco"] == 1 ) {	//U utilizador não pode votar
+ 		if ( $this_user["p_analise_risco"] == 1 ) {
+ 			$var = 1.2;	//Analisar o risco
+ 		}else{
+ 			$var = 1.3;	//Está em análise mas não está analisado.
+ 		}
+ 	}elseif( !($processo["analise_risco"]) ){	//O utilizador pode votar e não é necessário análise de risco
  		$var = 1.1;	//Votar
  	}elseif( !$this_user["p_vote"] && !$this_user["p_quality_vote"] ){	//Está em análise de risco e o utilizador pode analisar
  		$var = false;
@@ -142,21 +146,20 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  		$var = false;
  	}
 
- }elseif( $processo["avaliacao"] == 2 && !$this_user["p_vote"] && !$this_user["p_quality_vote"] ){	//Já terminou a votação e o utilizador pode votar
+ }elseif( $processo["avaliacao"] == 2 && ($this_user["p_vote"] || $this_user["p_quality_vote"]) ){	//Já terminou a votação e o utilizador pode votar
  	$var = 2;	//Resultado da votação
+ }else{
+ 	$var = false;
  }
 
-
+echo '<hr />';
+var_dump($var);
+echo '<hr />';
 
 switch ($var) {
 	case 0.1:	//Ainda não está em avaliação
 		?>
-<<<<<<< HEAD
 		<p>Este processo ainda não foi submetido para avaliação. <a href="index.php?mod=clientes_list&act=avaliar&id=<?php echo $processo["id"] ?>" class="btn btn-primary pull-right">Submeter para avaliação</a> </p>
-=======
- 		<h4>Estado</h4>
-		<p>Este processo ainda não submetido para avaliação. <a href="index.php?mod=clientes_list&act=avaliar&id=<?php echo $processo["id"] ?>" class="btn btn-primary pull-right">Submeter para avaliação</a> </p>
->>>>>>> FETCH_HEAD
 		<?php
 		break;
 	case 1.1:	//Em avaliação
@@ -164,6 +167,18 @@ switch ($var) {
 		$w = new Workflow();
 
 		?>
+
+		<?php if ( !empty( $processo["analise_risco_user"] ) ): ?>
+			<?php
+			$analise_user = $u->get_user_by_id( $processo["analise_risco_user"] );
+			?>
+			<h4>Análise de risco:</h4>
+			<p>Processo analisado por <strong><?php echo $analise_user["name"]; ?></strong> em: <strong><?php echo tools::display_date( $processo["data_analise_risco"] ); ?></strong></p>
+			<div class="alert alert-info text-left">
+				<?php echo str_replace("\n", "<br />", $processo["analise_risco_texto"]); ?>
+			</div>
+		<?php endif ?>
+
  		<h4>Estado</h4>
 		<p>Este processo encontra-se em avaliação.</p>
 		<hr style="margin-bottom:0;" />
@@ -173,7 +188,9 @@ switch ($var) {
  					<span class="btn btn-xs not-bold btn-default">Ainda não votou</span>
  					<span class="btn btn-xs not-bold btn-success">Aceitou</span>
  					<span class="btn btn-xs not-bold btn-danger">Rejeitou</span>
- 					<strong class="btn btn-s btn-default not-bold">Voto de qualidade</strong>
+ 					<?php if ( $processo["metodo_voto"] != "normal" ): ?>
+ 						<strong class="btn btn-s btn-default not-bold">Voto de qualidade</strong>
+ 					<?php endif ?>
 				</span>
 			</h3>
 
@@ -197,7 +214,7 @@ switch ($var) {
 						$response = "default";
 						break;
 				}
-				echo '<span class="btn btn-'.( ($voto["p_quality_vote"] == 1)?'s':'xs' ).' not-bold btn-'.$response.'">'.$voto["username"].'</span> ';
+				echo '<span class="btn btn-'.( ($voto["p_quality_vote"] == 1 && $processo["metodo_voto"] != "normal")?'s':'xs' ).' not-bold btn-'.$response.'">'.$voto["username"].'</span> ';
 			}
 			 ?>
 		
@@ -230,9 +247,9 @@ switch ($var) {
  			<form class="form-horizontal" action="index.php?mod=clientes_list&act=analise_de_risco" method="post">
  				<input type="hidden" name="process_id" value="<?php echo $processo["id"] ?>" />
  				<div class="control-group">
- 					<label>Análise de risco</label>
+ 					<label>Por favor insira a sua análise:</label>
  					<div class="">
- 						<textarea class="form-control auto-resize" name="analise_risco_texto"></textarea>
+ 						<textarea style="height:250px;" class="form-control auto-resize" name="analise_risco_texto"></textarea>
  					</div>
  				</div>
  				<hr />
@@ -243,8 +260,28 @@ switch ($var) {
  		</div>
 		<?php
 		break;
+	case 1.3:	//Em análise de risco mas não pode fazer análise
+		?>
+		<div class="alert alert-dismissable alert-info fade in">
+			<span class="title"><i class="icon-info-sign"></i> Em Análise</span>
+			Este processo está a ser processado pela análise de risco.
+		</div>
+
+		<?php
+		break;
 	case 2:	//Avaliado
 		?>
+		<?php if ( !empty( $processo["analise_risco_user"] ) ): ?>
+			<?php
+			$analise_user = $u->get_user_by_id( $processo["analise_risco_user"] );
+			?>
+			<h4>Análise de risco:</h4>
+			<p>Processo analisado por <strong><?php echo $analise_user["name"]; ?></strong> em: <strong><?php echo tools::display_date( $processo["data_analise_risco"] ); ?></strong></p>
+			<div class="alert alert-info text-left">
+				<?php echo str_replace("\n", "<br />", $processo["analise_risco_texto"]); ?>
+			</div>
+		<?php endif ?>
+
  		<h4>Estado</h4>
 		<?php if ( $processo["resultado"] ==  1): ?>
 			<p class="alert alert-success padding-10">Processo Aprovado</p>

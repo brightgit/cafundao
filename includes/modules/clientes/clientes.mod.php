@@ -16,7 +16,7 @@ class Clientes
 		$this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de comentários
 
 		if ( $this_user["p_analise_risco"] ) {
-			$extra_where = " and avaliacao = 2";	//Para análise de risco pode-se ver processos anteriores mas não se pode ver os não terminados.
+			$extra_where = " and avaliacao != 0";	//Os imcompletos não devem ser vistos pela análise.
 		}else{
 			$extra_where = "";
 		}
@@ -28,6 +28,7 @@ class Clientes
 
 		foreach ($clientes as $key => $value) {
 			$query = "select * from processes where client_id = '".$value["id"]."'".$extra_where." order by `data` asc";
+			//echo $query;
 			$res = mysql_query($query) or die_sql( $query );
 
 			while ( $row = mysql_fetch_array($res) ) {
@@ -56,6 +57,7 @@ class Clientes
 		}
 
 		$query = "select clients.* from processes left join clients on clients.id = processes.client_id ".$where." group by clients.id order by `data` asc ";
+
 		//echo $query;
 		$res = mysql_query($query) or die_sql( $query );
 		while ( $row = mysql_fetch_array($res) ) {
