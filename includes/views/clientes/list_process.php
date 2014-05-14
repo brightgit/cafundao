@@ -71,7 +71,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
     	<?php if ($processo["avaliacao"] == 0 ): ?>
 	        <div class="list-group-item dropzone-container hide">
 	            <div class="form-group">
-	                <form action="<?php echo base_url("index.php?mod=ajax&act=ajax_image_upload&folder_id=" . $data->id) ?>" class="dropzone" id="imageGalleryDropzone">
+	                <form action="<?php echo base_url("index.php?mod=ajax&act=ajax_image_upload&folder_id=" . $processo["id"]) ?>" class="dropzone" id="imageGalleryDropzone">
 	                    <div class="dz-message clearfix">
 	                        <i class="icon-picture"></i>
 	                        <span>Arraste os ficheiros para aqui ou clique para seleccionar</span>
@@ -99,14 +99,22 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
                     </tr>
                 </thead>
 		 		<tbody>
-		 			<?php foreach ($$processo["documents"] as $key => $value): ?>
+		 			<?php foreach ($processo["documents"] as $key => $value): ?>
 			 			<tr>
 			 				<td><?php echo $value["id"]; ?></td>
-			 				<td><?php echo $value["nome"]; ?></td>
+			 				<td><?php echo $value["title"]; ?></td>
 			 				<td><?php echo tools::display_date( $value["date_in"] ); ?></td>
-			 				<td>
-			 					<a href="#">Ver</a>
-			 					<a href="#">Download</a>
+			 				<td class="align-right">
+			 					<?php 
+			 						$able_to_view = array("png", "jpg", "jpeg", "gif"); 
+			 						$file_extension = tools::get_file_extension($value["title"]);
+
+			 						
+		 						?>
+			 					<?php if (in_array($file_extension, $able_to_view)): ?>
+			 					<a class="btn btn-xs btn-primary fancythis fancybox.iframe" href="<?php echo base_url("get_file.php?full=1&id=" . $value["id"]) ?>">Ver</a>	
+			 					<?php endif ?>			 					
+			 					<a class="btn btn-xs btn-success" href="<?php echo base_url("get_file.php?act=d&id=" . $value["id"]) ?>">Download</a>
 			 				</td>
 			 			</tr>
 		 			<?php endforeach ?>
@@ -151,10 +159,6 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  }else{
  	$var = false;
  }
-
-//echo '<hr />';
-//var_dump($var);
-//echo '<hr />';
 
 switch ($var) {
 	case 0.1:	//Ainda não está em avaliação

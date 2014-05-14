@@ -1610,3 +1610,7 @@ h5.text-white, h5.text-white span{
 .votes-thumbs i{
 	margin: 0px 2px;
 }
+
+.align-right{
+	text-align: right;
+}

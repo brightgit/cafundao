@@ -10,6 +10,11 @@ class Tools
 		# code...
 	}
 
+	//file extension
+	function get_file_extension($file_name) {
+		return substr(strrchr($file_name,'.'),1);
+	}
+
 	//Transforms folder name into accpetable email
 	public function foldify( $folder_name ) {
 		$folder_name = tools::url_title( $folder_name );

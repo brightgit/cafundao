@@ -91,7 +91,7 @@ class Ajax extends Core_admin
 			$upload_lib->set_extension( $_FILES["file"]["name"][$i] );
 			$upload_lib->generate_file_name( $_FILES["file"]["name"][$i] );
 			$upload = $upload_lib->upload( $_FILES["file"]["tmp_name"][$i] );
-			$sql = "INSERT INTO documents (title, category, file, criado_por) VALUES ('".$upload_lib->file->display_name."', ".$folder_id.", '".$upload_lib->file->display_name."', '".$_SESSION["user_bo"]."')";
+			$sql = "INSERT INTO documents (title, process_id, file, criado_por) VALUES ('".$upload_lib->file->display_name."', ".$folder_id.", '".$upload_lib->file->display_name."', '".$_SESSION["user_bo"]."')";
 			mysql_query($sql);
 			$i++;
 		}

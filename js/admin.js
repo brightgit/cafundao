@@ -1,5 +1,8 @@
 $(document).ready(function(){
 
+
+	$(".fancythis").fancybox({type: 'image'});
+
 	//permitir edição de campos na visualização de processo
 	$("button.btn-edit-process").click(function(){
 		
