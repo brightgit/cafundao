@@ -159,7 +159,9 @@ echo '<hr />';
 switch ($var) {
 	case 0.1:	//Ainda não está em avaliação
 		?>
+
 		<p>Este processo ainda não foi submetido para avaliação. <a href="index.php?mod=clientes_list&act=avaliar&id=<?php echo $processo["id"] ?>" class="btn btn-primary pull-right">Submeter para avaliação</a> </p>
+
 		<?php
 		break;
 	case 1.1:	//Em avaliação
@@ -290,6 +292,11 @@ switch ($var) {
 		<?php endif ?>
 		<?php
 		break;
+
+
+	default:
+		echo "<p>Este processo encontra-se em análise de risco</p>";
+	break;
 }
   ?>
 
