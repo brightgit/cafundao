@@ -9,7 +9,7 @@ $email = '
 <div style="text-align:center; margin:10px auto 10px auto; padding:0;">
 	<table cellpadding="0" cellspacing="0" width="630" style="width:630px; margin:0 auto; padding:0px 0; border: 1px solid #aaa; border-bottom:0;">
 		<tr>
-			<td style="text-align:center;"><img src="http://localhost/cafundao/images/logos/credito-agricola_news.jpg" alt="Cr&eacute;dito Agr&iacute;cola Fund&atilde;o" style="float:left;" width="630" height="72" /></td>
+			<td style="text-align:center;"><img src="http://www.virtualdataroom.pt/cafundao/images/logos/credito-agricola_news.jpg" alt="Cr&eacute;dito Agr&iacute;cola Fund&atilde;o" style="float:left;" width="630" height="72" /></td>
 		</tr>
 	</table>
 
@@ -20,7 +20,7 @@ $email = '
 		<tr>
 			<td style="text-align:left; font-size:12px; color:#333; margin-top:;">
 				<p style="text-align:left;">Caro(a) Sr.(a) {name},</p>
-				<p style="text-align:left;">O processo '.$row_email_risco["ccc_num"].' do cliente '.$row_email_risco["nome"].' foi aprovado.</p>
+				<p style="text-align:left;">O processo <strong>'.$row_email_risco["ccc_num"].'</strong> do cliente <strong>'.$row_email_risco["nome"].'</strong> foi aprovado.</p>
 				<p style="text-align:left;">Poderá rever o processo em <a href="http://virtualdataroom.pt/cafundao/index.php">www.virtualdataroom.pt/cafundao</a>.</p>
 
 			</td>
@@ -34,7 +34,7 @@ $email = '
 			<p style="text-align:left; font-size:12px; margin-bottom:2px; color:#333; margin-top:2px; padding-left:20px;">6230-421</p>
 			<p style="text-align:left; font-size:12px; margin-bottom:2px; color:#333; margin-top:2px; padding-left:20px;">Fund&atilde;o</p>
 			</td>
-			<td style="text-align:center; border-bottom:1px solid #aaa;"><img src="http://localhost/cafundao/images/logos/bright-digidoc.png" alt="Bright & Digidoc" width="150" height="25" /></td>
+			<td style="text-align:center; border-bottom:1px solid #aaa;"><img src="http://www.virtualdataroom.pt/cafundao/images/logos/bright-digidoc.png" alt="Bright & Digidoc" width="150" height="25" /></td>
 		</tr>
 	</table>
 
