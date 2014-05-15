@@ -325,7 +325,7 @@ class Database
 	public $database;
 	public $password;
 	public $mysqli;
-	static $force_online = false;
+	static $force_online = true;
 	
 	function __construct()
 	{

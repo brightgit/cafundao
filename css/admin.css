@@ -129,13 +129,17 @@ li.aprovado a, .label-aprovado { background-color: #aece4e !important; }
 li.incompleto a, .label-incompleto { background-color: #aaa !important; }
 li.para_avaliacao a, .label-para_avaliacao { background-color: #f4c84f !important; }
 li.reprovado a, .label-reprovado { background-color: #e77755 !important; }
-li.analise_risco a, .label-analise_risco { background-color: #aaa !important; }
+li.analise_risco a, .label-analise_risco { background-color: #b83564 !important; }
 
 .legend-container{
 	position: absolute;
-	bottom: 20px;
+	bottom: 10px;
 }
 
 .label-legenda{
 	font-size: 13px;
+}
+
+.legend-container p .label{
+	line-height: 22px;
 }
