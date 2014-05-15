@@ -70,7 +70,7 @@ class Clientes_list
 
 
 	function avaliar(  ) {
-		require_once( "includes/modules/emails/emails.mod.php" );
+		require_once( base_path( "includes/modules/emails/emails.mod.php" ) );
 		$e = new Email();
 
 		//Aqui falta colocar para análise de risco caso seja o caso
@@ -87,6 +87,30 @@ class Clientes_list
 
 		$query = "update processes set avaliacao = 1".$extra_update." where id = '".$_GET["id"]."'";
 		mysql_query($query) or die_sql( $query );
+
+
+
+		//Email para analise de risco
+		if ( $montante["montante"] > 50000 ) {
+			//Dados
+			$query = "select * from processes left join clients on clients.id = processes.client_id where processes.id = '".$_GET["id"]."'";
+			$res_email_risco = mysql_query($query) or die_sql( $query );
+			$row_email_risco = mysql_fetch_array($res_email_risco);
+			include( "includes/views/emails/email_analise_risco.php" );
+
+
+
+			$subject = "Novo processo em análise de risco.";
+
+			$query = "select * from users where p_analise_risco = 1";
+			$res = mysql_query($query) or die_sql( $query );
+			while ( $row = mysql_fetch_array($res) ) {
+				$email_to_send = str_replace("{name}", $row["name"], $email);
+				$e->send_email( $row["email"], $subject, $email_to_send );
+			}
+
+		}
+
 
 		$query = "select * from users where p_vote = 1 or p_quality_vote = 1";	//Utilizadores que podem votar
 		$res = mysql_query($query) or die_sql( $query );
