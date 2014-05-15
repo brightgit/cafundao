@@ -19,9 +19,9 @@ $email = '
 		</tr>
 		<tr>
 			<td style="text-align:left; font-size:12px; color:#333; margin-top:;">
-				<p>Caro(a) Sr.(a) {name},</p>
-				<p>O processo '.$row_email_risco["ccc_num"].' do cliente '.$row_email_risco["nome"].' foi aprovado.</p>
-				<p>Poderá rever o processo em <a href="http://virtualdataroom.pt/cafundao/index.php">www.virtualdataroom.pt/cafundao</a>.</p>
+				<p style="text-align:left;">Caro(a) Sr.(a) {name},</p>
+				<p style="text-align:left;">O processo <strong>'.$row_email_risco["ccc_num"].'</strong> do cliente <strong>'.$row_email_risco["nome"].'</strong> foi aprovado.</p>
+				<p style="text-align:left;">Poderá rever o processo em <a href="http://virtualdataroom.pt/cafundao/index.php">www.virtualdataroom.pt/cafundao</a>.</p>
 
 			</td>
 		</tr>
