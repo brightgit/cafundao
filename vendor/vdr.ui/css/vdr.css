@@ -510,7 +510,7 @@ nav.user-menu .panel.notifications-view .user-menu-arrow{right:20px}
 @media(min-width:480px){.sidebar{position:absolute;height:100%;left:60px;width:20px;overflow:hidden;background-color:#fbfbfb;-webkit-transition:width .1s ease-in,padding .1s;transition:width .1s ease-in,padding .1s;-webkit-box-shadow:4px 0 10px -4px rgba(0,0,0,0.15);box-shadow:4px 0 10px -4px rgba(0,0,0,0.15)}
 .sidebar .panel{width:300px;height:100%;margin:0}
 .sidebar .panel-heading{display:block;border-color:transparent;-webkit-transition:border-color .05s;transition:border-color .05s}
-.sidebar .tree-body{position:absolute;top:115px;left:0;right:2px;bottom:13px;padding:0 20px}
+.sidebar .tree-body{position:absolute;top:115px;left:0;right:2px;bottom:75px;padding:0 20px}
 .sidebar.extended{width:300px}
 .sidebar.extended .panel .panel-heading{border-color:#e5e5e5}
 .sidebar.retracted{max-height:none!important}

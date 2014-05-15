@@ -34,6 +34,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
 			</div>
 		</div>
 		<div class="panel-body">
+
 			<form action="" method="get" class="form-horitontal">
 				<input type="hidden" name="mod" value="catalogo_list" />
 
@@ -50,7 +51,6 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
 					<?php endif ?>
 
 				</div>
-
 
 				<div class="tab-content panel-default panel-block">
 					<div class="jstree tab-pane list-group active tree-body">
@@ -102,9 +102,25 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
 			</div>
 			
 		</div>
-	</form>
+
+</form>
+
+<div class="legend-container">
+	<span class="label-legenda">Legenda:</span>
+	<p>
+		<span class="label label-aprovado">Aprovado</span>
+		<span class="label label-incompleto">Incompleto</span>
+		<span class="label label-para_avaliacao">Avaliação</span>
+		<span class="label label-reprovado">Reprovado</span>
+		<span class="label label-analise_risco">Análise de risco</span>
+	</p>
 </div>
+
 </div>
+
+</div>
+
+
 </section>
 
 <div class="wrapper retracted scrollable" style="opacity:1;">
