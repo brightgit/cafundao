@@ -46,16 +46,16 @@ class Clientes_list
 		mysql_query($query) or die_sql( $query );
 
 
-		$res_email_risco = mysql_query($query) or die_sql( $query );
 		$query = "select * from processes left join clients on clients.id = processes.client_id where processes.id = '".$_POST["process_id"]."'";
+		$res_email_risco = mysql_query($query) or die_sql( $query );
 		$row_email_risco = mysql_fetch_array($res_email_risco);
-		include( "includes/views/emails/email_analise_risco.php" );
+		include( "includes/views/emails/email_para_votacao.php" );
 
 
 
-		$subject = "Novo processo em análise de risco.";
+		$subject = "Novo processo submetido para votação.";
 
-		$query = "select * from users where p_analise_risco = 1";
+		$query = "select * from users where p_vote = 1 || p_quality_vote = 1";
 		$res = mysql_query($query) or die_sql( $query );
 		while ( $row = mysql_fetch_array($res) ) {
 			$email_to_send = str_replace("{name}", $row["name"], $email);
@@ -146,7 +146,7 @@ class Clientes_list
 
 
 
-			$subject = "Novo processo em análise de risco.";
+			$subject = "Novo processo submetido para votação.";
 
 			$query = "select * from users where p_vote = 1 OR p_quality_vote = 1";
 			$res = mysql_query($query) or die_sql( $query );
@@ -358,9 +358,9 @@ class Clientes_list
 
 
 
-		$subject = "Novo processo em análise de risco.";
+		$subject = "Novo processo aprovado.";
 
-		$query = "select * from users where p_analise_risco = 1";
+		$query = "select * from users where p_com_sim = 1";
 		$res = mysql_query($query) or die_sql( $query );
 		while ( $row = mysql_fetch_array($res) ) {
 			$email_to_send = str_replace("{name}", $row["name"], $email);
@@ -376,13 +376,13 @@ class Clientes_list
 		$query = "select * from processes left join clients on clients.id = processes.client_id where processes.id = '".$process_id."'";
 		$res_email_risco = mysql_query($query) or die_sql( $query );
 		$row_email_risco = mysql_fetch_array($res_email_risco);
-		include( "includes/views/emails/email_aprovacao.php" );
+		include( "includes/views/emails/email_reprovacao.php" );
 
 
 
-		$subject = "Novo processo em análise de risco.";
+		$subject = "Novo processo reprovado.";
 
-		$query = "select * from users where p_analise_risco = 1";
+		$query = "select * from users where p_com_nao = 1";
 		$res = mysql_query($query) or die_sql( $query );
 		while ( $row = mysql_fetch_array($res) ) {
 			$email_to_send = str_replace("{name}", $row["name"], $email);

@@ -15,11 +15,11 @@ $email = '
 
 	<table border="0" cellpadding="0" cellspacing="0" width="600" style="width:600px; margin:0 auto; border-left:1px solid #aaa; border-right:1px solid #aaa; padding:10px;">
 		<tr>
-			<td style="text-align:left; font-size:16px; color:#333; font-weight:bold; margin-top:;">CA Fund&atilde;o - Nova análise de risco</td>
+			<td style="text-align:left; font-size:16px; color:#333; font-weight:bold;"><strong style="text-align:left; font-size:16px; color:#333; font-weight:bold;">CA Fund&atilde;o - Nova análise de risco<strong></td>
 		</tr>
 		<tr>
 			<td style="text-align:left; font-size:12px; color:#333; margin-top:;">
-				<p style="text-align:left;">Caro(a) Sr.(a) {name},</p>
+				<p style="text-align:left;">Caro(a) Sr.(a) <strong>{name}</strong>,</p>
 				<p style="text-align:left;">O processo <strong>'.$row_email_risco["ccc_num"].'</strong> do cliente <strong>'.$row_email_risco["nome"].'</strong> necessita da sua análise de risco.</p>
 				<p style="text-align:left;">Por favor proceda ao login <a href="http://virtualdataroom.pt/cafundao/index.php">na aplicação</a> de forma a processar o pedido.</p>
 
