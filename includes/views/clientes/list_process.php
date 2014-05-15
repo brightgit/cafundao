@@ -5,6 +5,8 @@ $cliente = $c->get_cliente( $_GET["clientid"] );
 
 if ( $_GET["processid"] != 0 ) {	//Temos processo
 	$processo = $c->get_processo( $_GET["processid"] );
+	$query = "insert into access_processes set process_id = '".$processo["id"]."', session_id = '".$_SESSION["session_db_id"]."' ";
+	mysql_query($query) or die_sql( $query );
 }
 
 
@@ -13,6 +15,7 @@ require_once( base_path( "includes/modules/users/users.mod.php" ) );
 $u = new Users();
 
 $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de comentários
+
 
 
  ?>
@@ -51,7 +54,23 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  	</div>
 
  	<div class="col-lg-6"> 
+ 		<!-- Emails para os quais é possível fazer upload -->
  		<div><a href="index.php?mod=process&act=view&process_id=<?php echo $processo["id"]; ?>"><i class="icon-file-text"></i> Ver processo</a></div>
+ 		<?php 
+ 		if ( $processo["avaliacao"] == 0 && $this_user["p_upload"] == 1 ):
+
+	 		$emails = $c->get_emails_by_process( $processo["id"] );
+	 		if ($emails) {
+	 			echo '<span>Poderá enviar ficheiros directamente para:</span>';
+	 			echo "<ul>";
+	 			foreach ($emails as $key => $value) {
+	 				echo "<li>".$value["email"]."</li>";
+	 			}
+	 			echo "</ul>";
+	 		}
+ 		endif;
+ 		
+ 		 ?>
 	</div>
  </div>
 

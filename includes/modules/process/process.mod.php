@@ -165,9 +165,10 @@ class Process extends Core_admin
 		$sql .= " `telemovel` = '".$client["telemovel"]."', ";
 		$sql .= " `nipc` = '".$client["nipc"]."'";
 
-		$insert = mysql_query($sql);
+		$insert = mysql_query($sql) or die_sql( $query );
 		if($insert){
 			$sql = "SELECT id FROM clients where numero_cliente = ".$client["numero_cliente"];
+			$sql  = "select id from clients order by id desc limit 1";
 			$client_id_result = mysql_fetch_object(mysql_query($sql));
 			$client_id = $client_id_result->id;
 			return $client_id;

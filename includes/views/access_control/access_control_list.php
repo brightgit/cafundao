@@ -44,12 +44,12 @@ $ac = new Access_control;
 		 			<h4 class="section-title">Logins </h4>
 		 			
 
-		            <table class="table table-bordered table-striped" id="access_control">
+		            <table class="table table-bordered table-striped table-condensed" id="access_control">
 		                <thead>
 		                    <tr>
 		                        <!--th style="width:10px;"></th Isto é suposto ser multiple actions-->
 		                        <th style="width:20px;">#</th>
-		                        <th>Enderço de Ip</th>
+		                        <th>Endereço de Ip</th>
 		                        <th>Email</th>
 		                        <th>Início</th>
 		                        <th>Fim</th>

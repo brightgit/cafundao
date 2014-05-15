@@ -3,8 +3,12 @@ $ac = new Access_control;
 $login = $ac->get_login( $_GET["id"] );
 
 $num_logins = $ac->num_logins_by_user( $login["user_id"] );
+
 $num_visualizacoes = $ac->num_views_por_login( $login["id"] );
 $num_total_visualizacoes = $ac->num_views_por_user( $login["user_id"] );
+
+$num_visualizacoes_processes = $ac->num_views_por_login_processes( $login["id"] );
+$num_total_visualizacoes_processes = $ac->num_views_por_user_processes( $login["user_id"] );
 
  ?>
 <h4>Informação do login</h4>
@@ -28,5 +32,6 @@ else: ?>
 
 <p>Utilizador com <strong><?php echo $num_logins; ?></strong> logins distintos.</p>
 <p>Visualizou <strong><?php echo $num_visualizacoes; ?></strong> documentos nesta sessão de um total de <strong><?php echo $num_total_visualizacoes; ?></strong> visualizações.</p>
+<p>Visualizou <strong><?php echo $num_visualizacoes_processes; ?></strong> processos nesta sessão de um total de <strong><?php echo $num_total_visualizacoes_processes; ?></strong> processos visualizados.</p>
 
 

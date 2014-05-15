@@ -199,6 +199,22 @@ class Home
 
 	}
 
+
+	function get_processos_por_processar() {
+		$query = "select * from processes where avaliacao = 1";
+		return mysql_num_rows( mysql_query($query) );
+	}
+	function get_processos_totais() {
+		$query = "select * from processes where 1";
+		return mysql_num_rows( mysql_query($query) );
+	}
+
+
+	function get_analises_em_falta(){
+		$query = "select * from processes where analise_risco = 1";
+		return mysql_num_rows( mysql_query($query) );		
+	}
+
 }
 
 

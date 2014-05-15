@@ -105,7 +105,7 @@ class Access_control_list
 		$ret->sEcho = $_GET['sEcho']+1;
 		//echo $query_sem_limits;
 	    $ret->iTotalRecords = mysql_num_rows(mysql_query($query_sem_limits));
-	    $ret->iTotalDisplayRecords = mysql_num_rows($res);
+	    $ret->iTotalDisplayRecords = mysql_num_rows(mysql_query($query_sem_limits));
 
 
 	    $this->output = $ret;

@@ -132,7 +132,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
 				<form action="index.php" method="get" >
 					<input type="hidden" name="mod" value="pesquisa_avancada" />
 					<div class="input-group">
-					  <input type="text" name="processo" class="form-control" placeholder="Nome do ficheiro" required="required">
+					  <input type="text" name="processo" class="form-control" placeholder="" required="required">
 					  <span class="input-group-btn">
 	       				<button class="btn btn-default" style="background-color:#3699d2;"  type="submit">Pesquisa Global</button>
 				  	  </span>

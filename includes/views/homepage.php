@@ -5,6 +5,10 @@ $latest_views = $home->get_latest_aprovals();
 $latest_accesses = $home->get_latest_accesses();
 $stats = $home->get_stats();
 
+require_once( base_path( "includes/modules/users/users.mod.php" ) );
+$u = new Users();
+$this_user = $u->get_user_by_id( $_SESSION["user_bo"] );
+
 ?>
 <section class="wrapper scrollable" style="opacity: 1;">
 	<section class="title-bar">
@@ -27,15 +31,24 @@ $stats = $home->get_stats();
 
 	<nav class="quick-launch-bar">
 		<ul class="ui-sortable">
-			<li><a href="<?php echo base_url("index.php?mod=home") ?>"><i class="icon-home nav-icon"></i><span class="nav-text">Dashboard</span></a></li>
-			<li><a href="<?php echo base_url("index.php?mod=files") ?>"><i class="icon-file-alt nav-icon"></i><span class="nav-text">Processos</span></a></li>
-			<li><a href="<?php echo base_url("index.php?mod=tags_list") ?>"><i class="icon-tags nav-icon"></i><span class="nav-text">Tags</span></a></li>		
+		<li><a href="<?php echo base_url("index.php?mod=home") ?>"><i class="icon-home nav-icon"></i><span class="nav-text">Dashboard</span></a></li>
+		<!-- Disabled but working -->
+		<!-- li><a href="<?php echo base_url("index.php?mod=inbox_list") ?>"><i class="icon-inbox nav-icon"></i><span class="nav-text">Inbox</span></a></li -->
+		<li><a href="<?php echo base_url("index.php?mod=clientes_list") ?>"><i class="icon-file-alt nav-icon"></i><span class="nav-text">Processos</span></a></li>
+		<!-- li><a href="<?php echo base_url("index.php?mod=pesquisa_avancada") ?>"><i class="icon-gears nav-icon"></i><span class="nav-text">Pesquisa Avançada</span></a></li -->
+		<!-- li><a href="<?php echo base_url("index.php?mod=tags_list") ?>"><i class="icon-tags nav-icon"></i><span class="nav-text">Tags</span></a></li -->
+		<?php if ($this_user["p_users"]): ?>
 			<li><a href="<?php echo base_url("index.php?mod=users_list") ?>"><i class="icon-group nav-icon"></i><span class="nav-text">Utilizadores</span></a></li>
-			<li><a href="<?php echo base_url("index.php?mod=access_control_list") ?>"><i class="icon-signin nav-icon"></i><span class="nav-text">Acessos</span></a></li>
-			<li><a href="<?php echo base_url("index.php?mod=workflow_view") ?>"><i class="icon-code-fork nav-icon"></i><span class="nav-text">Workflow</span></a></li>
-			<!--li><a href="<?php echo base_url("index.php?mod=settings") ?>"><i class="icon-gears nav-icon"></i><span class="nav-text">Definições</span></a></li -->
-			<!-- li><a href="<?php echo base_url("index.php?mod=clients") ?>"><i class="icon-user nav-icon"></i><span class="nav-text">Clientes</span></a></li -->
-			<!-- li><a href="<?php echo base_url("index.php?mod=users") ?>"><i class="icon-comment nav-icon"></i><span class="nav-text">Comentários</span></a></li-->
+		<?php endif ?>
+		<?php if ($this_user["p_users"]): ?>
+			<li><a href="<?php echo base_url("index.php?mod=workflow_view") ?>"><i class="icon-code-fork nav-icon"></i><span class="nav-text">Método de decisão</span></a></li>
+		<?php endif ?>
+		<?php if ($this_user["p_users"]): ?>
+			<li><a href="<?php echo base_url("index.php?mod=access_control_list") ?>"><i class="icon-signin nav-icon"></i><span class="nav-text">Controlo de acessos</span></a></li>
+		<?php endif ?>
+		<!--li><a href="<?php echo base_url("index.php?mod=settings") ?>"><i class="icon-gears nav-icon"></i><span class="nav-text">Definições</span></a></li -->
+		<!-- li><a href="<?php echo base_url("index.php?mod=clients") ?>"><i class="icon-user nav-icon"></i><span class="nav-text">Clientes</span></a></li -->
+		<!-- li><a href="<?php echo base_url("index.php?mod=users") ?>"><i class="icon-comment nav-icon"></i><span class="nav-text">Comentários</span></a></li-->
 		</ul>
 	</nav>
 
@@ -53,24 +66,32 @@ $stats = $home->get_stats();
 							<li class="list-group-item">
 								<a href="<?php echo base_url("index.php?mod=inbox_list") ?>" class="black-link">
 									<span class="title-text">
-										Documentos<br /><br />
+										Processos<br /><br />
 									</span>
 									<span class="processed-value">
 										<?php
+										//Processos por processar
+										$processos_por_processar = $home->get_processos_por_processar(  );
+										$processos_totais = $home->get_processos_totais( );
+
 										$ficheiros_total = $home->get_total_ficheiros();
-										$ficheiros_por_processar = $home->get_ficheiros_a_processar();
-										$percentagem = ceil(($ficheiros_por_processar * 100) / $ficheiros_total);
+										//$ficheiros_por_processar = $home->get_ficheiros_a_processar();
+										$percentagem = 100-ceil(($processos_por_processar * 100) / $processos_totais);
 										?>
-										<?php echo $ficheiros_por_processar ?>
+										<?php echo $processos_por_processar ?>
 									</span>
 								</a>
 							</li>
 							<li class="list-group-item">
 								<span class="title-text">
-									Workflows<br /><br />
+									Análises em falta<br />
 								</span>
 								<span class="processed-value">
-									2
+									<?php 
+									$analises_em_falta = $home->get_analises_em_falta();
+									echo $analises_em_falta;
+									 ?>
+
 								</span>
 							</li>
 							<li class="list-group-item">

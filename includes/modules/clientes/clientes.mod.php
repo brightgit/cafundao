@@ -93,6 +93,16 @@ class Clientes
 		return $ret;
 	}
 
+	function get_emails_by_process( $process_id ) {
+		$query = "select * from emails_by_process where process_id = '".$process_id."'";
+		$res = mysql_query($query) or die_sql( mysql_error() );
+		while ( $row = mysql_fetch_array($res) ) {
+			$ret[] = $row;
+		}
+		return $ret;
+	}
+
+
 }
 
 

@@ -70,6 +70,9 @@ class Clientes_list
 
 
 	function avaliar(  ) {
+		require_once( "includes/modules/emails/emails.mod.php" );
+		$e = new Email();
+
 		//Aqui falta colocar para análise de risco caso seja o caso
 		//Ir buscar o montante
 		$query = "select processes_form.montante from processes left join processes_form on processes_form.process_id = processes.id where processes.id = '".$_GET["id"]."'";

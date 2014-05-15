@@ -325,7 +325,7 @@ class Database
 	public $database;
 	public $password;
 	public $mysqli;
-	static $force_online = true;
+	static $force_online = false;
 	
 	function __construct()
 	{
@@ -338,7 +338,7 @@ class Database
 				$this->host = "localhost";
 				$this->user = "root";
 				$this->password = "";
-				$this->database = "virtualdataroom";
+				$this->database = "cafundao";
 				break;
 				
 				default:
