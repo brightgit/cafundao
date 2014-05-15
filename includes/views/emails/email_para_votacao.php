@@ -20,7 +20,7 @@ $email = '
 		<tr>
 			<td style="text-align:left; font-size:12px; color:#333; margin-top:;">
 				<p>Caro(a) Sr.(a) {name},</p>
-				<p>O processo '.$row_email_risco["ccc_num"].' do cliente '.$row_email_risco["name"].' foi submetido para votação.</p>
+				<p>O processo '.$row_email_risco["ccc_num"].' do cliente '.$row_email_risco["nome"].' foi submetido para votação.</p>
 				<p>Por favor proceda <a href="http://virtualdataroom.pt/cafundao/index.php">à aplicação</a> de forma a aprovar ou reprovar o processo em questão.</p>
 
 			</td>
