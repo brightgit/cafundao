@@ -37,8 +37,33 @@ class Clientes_list
 	}
 
 	function analise_de_risco(){
+		require_once( base_path( "includes/modules/emails/emails.mod.php" ) );
+		$e = new Email();
+
+
+
 		$query = "update processes set analise_risco = NULL, data_analise_risco = NOW(), analise_risco_texto = '".mysql_real_escape_string($_POST["analise_risco_texto"])."', analise_risco_user = '".$_SESSION["user_bo"]."' where id = '".$_POST["process_id"]."'";
 		mysql_query($query) or die_sql( $query );
+
+
+		$res_email_risco = mysql_query($query) or die_sql( $query );
+		$query = "select * from processes left join clients on clients.id = processes.client_id where processes.id = '".$_POST["process_id"]."'";
+		$row_email_risco = mysql_fetch_array($res_email_risco);
+		include( "includes/views/emails/email_analise_risco.php" );
+
+
+
+		$subject = "Novo processo em análise de risco.";
+
+		$query = "select * from users where p_analise_risco = 1";
+		$res = mysql_query($query) or die_sql( $query );
+		while ( $row = mysql_fetch_array($res) ) {
+			$email_to_send = str_replace("{name}", $row["name"], $email);
+			$e->send_email( $row["email"], $subject, $email_to_send );
+		}
+
+
+
 		tools::notify_add( "Análise submetida com sucesso.", "success" );
 		redirect( "index.php?mod=clientes_list&id=".$_POST["process_id"] );
 	}
@@ -92,6 +117,7 @@ class Clientes_list
 
 		//Email para analise de risco
 		if ( $montante["montante"] > 50000 ) {
+
 			//Dados
 			$query = "select * from processes left join clients on clients.id = processes.client_id where processes.id = '".$_GET["id"]."'";
 			$res_email_risco = mysql_query($query) or die_sql( $query );
@@ -108,6 +134,28 @@ class Clientes_list
 				$email_to_send = str_replace("{name}", $row["name"], $email);
 				$e->send_email( $row["email"], $subject, $email_to_send );
 			}
+
+		} else {
+			//Emails para votar
+
+			//Dados
+			$query = "select * from processes left join clients on clients.id = processes.client_id where processes.id = '".$_GET["id"]."'";
+			$res_email_risco = mysql_query($query) or die_sql( $query );
+			$row_email_risco = mysql_fetch_array($res_email_risco);
+			include( "includes/views/emails/email_para_votacao.php" );
+
+
+
+			$subject = "Novo processo em análise de risco.";
+
+			$query = "select * from users where p_vote = 1 OR p_quality_vote = 1";
+			$res = mysql_query($query) or die_sql( $query );
+			while ( $row = mysql_fetch_array($res) ) {
+				$email_to_send = str_replace("{name}", $row["name"], $email);
+				$e->send_email( $row["email"], $subject, $email_to_send );
+			}
+
+
 
 		}
 
@@ -238,11 +286,13 @@ class Clientes_list
 				if ( ($num_votos_normais + $num_votos_admin) >= $client["num_min_votos"] ) {	//Temos mais votos que os necessários, vamos aceitar.
 					$query = "update processes set resultado = '1', avaliacao = '2', data_avaliacao = NOW() where id = '".$client["id"]."'";
 					mysql_query( $query ) or die_sql( $query );
+					$this->email_aprovacao( $client["id"] );
 					tools::notify_add( "Cliente aprovado.", "success" );
 				}elseif( ( $num_votos_admin + $num_votos_normais + $num_votos_normais_falta + $num_votos_admin_falta ) < $client["num_min_votos"] ) {
 					//é impossível obter todos os votos a favor
 					$query = "update processes set resultado = '0', avaliacao = '2', data_avaliacao = NOW() where id = '".$client["id"]."'";
 					mysql_query( $query ) or die_sql( $query );
+					$this->email_rejeicao( $client["id"] );
 					tools::notify_add( "Cliente rejeitado.", "success" );
 				}
 				break;
@@ -251,10 +301,12 @@ class Clientes_list
 				if ( $num_votos_admin != $num_votos_total_admin && $num_votos_admin_falta == 0  ) {	//alguem rejeitou
 					$query = "update processes set resultado = '0', avaliacao = '2', data_avaliacao = NOW() where id = '".$client["id"]."'";
 					mysql_query( $query ) or die_sql( $query );
+					$this->email_rejeicao( $client["id"] );
 					tools::notify_add( "Cliente rejeitado.", "success" );
 				}elseif( $num_votos_admin_falta == 0  ) {	//Já ninguem pode rejeitar
 					$query = "update processes set resultado = '1', avaliacao = '2', data_avaliacao = NOW() where id = '".$client["id"]."'";
 					mysql_query( $query ) or die_sql( $query );
+					$this->email_aprovacao( $client["id"] );
 					tools::notify_add( "Cliente aprovado.", "success" );
 				}
 				break;
@@ -262,10 +314,12 @@ class Clientes_list
 				if ( $num_votos_admin > 0 ) {
 					$query = "update processes set resultado = '1', avaliacao = '2', data_avaliacao = NOW() where id = '".$client["id"]."'";
 					mysql_query( $query ) or die_sql( $query );
+					$this->email_aprovacao( $client["id"] );
 					tools::notify_add( "Cliente aprovado.", "success" );
 				}elseif( $num_votos_admin == 0 && $num_votos_admin_falta == 0 ){	//ninguem aprovou
 					$query = "update processes set resultado = '0', avaliacao = '2', data_avaliacao = NOW() where id = '".$client["id"]."'";
 					mysql_query( $query ) or die_sql( $query );
+					$this->email_rejeicao( $client["id"] );
 					tools::notify_add( "Cliente rejeitado.", "success" );
 				}
 				break;
@@ -273,11 +327,13 @@ class Clientes_list
 				if ( ($num_votos_admin) >= $client["num_min_votos_qualidade"] ) {	//Temos mais votos que os necessários, vamos aceitar.
 					$query = "update processes set resultado = '1', avaliacao = '2', data_avaliacao = NOW() where id = '".$client["id"]."'";
 					mysql_query( $query ) or die_sql( $query );
+					$this->email_aprovacao( $client["id"] );
 					tools::notify_add( "Cliente aprovado.", "success" );
 				}elseif( ( $num_votos_admin  + $num_votos_normais_falta ) < $client["num_min_votos_qualidade"] ) {
 					//é impossível obter todos os votos a favor
 					$query = "update processes set resultado = '0', avaliacao = '2', data_avaliacao = NOW() where id = '".$client["id"]."'";
 					mysql_query( $query ) or die_sql( $query );
+					$this->email_rejeicao( $client["id"] );
 					tools::notify_add( "Cliente rejeitado.", "success" );
 				}
 				break;
@@ -288,6 +344,50 @@ class Clientes_list
 				break;
 		}
 
+
+	}
+
+	function email_aprovacao( $process_id ) {
+		require_once( base_path( "includes/modules/emails/emails.mod.php" ) );
+		$e = new Email();
+		//Dados
+		$query = "select * from processes left join clients on clients.id = processes.client_id where processes.id = '".$process_id."'";
+		$res_email_risco = mysql_query($query) or die_sql( $query );
+		$row_email_risco = mysql_fetch_array($res_email_risco);
+		include( "includes/views/emails/email_aprovacao.php" );
+
+
+
+		$subject = "Novo processo em análise de risco.";
+
+		$query = "select * from users where p_analise_risco = 1";
+		$res = mysql_query($query) or die_sql( $query );
+		while ( $row = mysql_fetch_array($res) ) {
+			$email_to_send = str_replace("{name}", $row["name"], $email);
+			$e->send_email( $row["email"], $subject, $email_to_send );
+		}
+
+	}
+
+	function email_rejeicao( $process_id ) {
+		require_once( base_path( "includes/modules/emails/emails.mod.php" ) );
+		$e = new Email();
+		//Dados
+		$query = "select * from processes left join clients on clients.id = processes.client_id where processes.id = '".$process_id."'";
+		$res_email_risco = mysql_query($query) or die_sql( $query );
+		$row_email_risco = mysql_fetch_array($res_email_risco);
+		include( "includes/views/emails/email_aprovacao.php" );
+
+
+
+		$subject = "Novo processo em análise de risco.";
+
+		$query = "select * from users where p_analise_risco = 1";
+		$res = mysql_query($query) or die_sql( $query );
+		while ( $row = mysql_fetch_array($res) ) {
+			$email_to_send = str_replace("{name}", $row["name"], $email);
+			$e->send_email( $row["email"], $subject, $email_to_send );
+		}
 
 	}
 
