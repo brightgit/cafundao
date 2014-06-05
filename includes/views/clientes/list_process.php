@@ -50,7 +50,7 @@ $this_user = $u->get_user_by_id( $_SESSION["user_bo"] ); //Futuro gráfico de co
  	<div class="col-lg-6">
  		<div><strong>CCC nº:</strong> <?php echo $processo["ccc_num"]; ?></div>
  		<div><strong>Id Aplicação:</strong> <?php echo $processo["id"]; ?></div>
- 		<div><strong>Prazo:</strong> <?php echo tools::time_for( $processo["prazo"] ); ?></div>
+ 		<div><strong>Prazo:</strong> <?php echo tools::display_date( $processo["prazo"] ); ?></div>
  	</div>
 
  	<div class="col-lg-6"> 
